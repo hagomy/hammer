@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
-            R.id.navigation_festival -> {
+            R.id.navigation_home -> {
                 mViewPager?.currentItem = 0
                 return@OnNavigationItemSelectedListener true
             }
@@ -47,16 +47,14 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
         setSupportActionBar(main_toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
-        title = "GACHI"
+        title = getString(R.string.app_name)
 
         mNavigation = main_navigation
         mNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
         mMainPagerAdapter = MainPagerAdapter(supportFragmentManager).apply {
-            setListItem(0)
-            setListItem(1)
-            setListItem(2)
-            setListItem(3)
+            for(i in 0..3)
+                setListItem(i)
             notifyDataSetChanged()
         }
 

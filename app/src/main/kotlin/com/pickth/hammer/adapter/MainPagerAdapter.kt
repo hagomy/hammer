@@ -21,30 +21,30 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
 import com.pickth.hammer.view.fragment.Test2Fragment
 import com.pickth.hammer.view.fragment.Test3Fragment
-import com.pickth.hammer.view.fragment.Test4Fragment
-import com.pickth.hammer.view.fragment.TestFragment
+import com.pickth.hammer.view.fragment.MyInfoFragment
+import com.pickth.hammer.view.fragment.HomeFragment
 
 /**
  * Created by yonghoon on 2018-01-09
  * Blog   : http://blog.pickth.com
  */
 
-class MainPagerAdapter(val fragmentManager: FragmentManager): FragmentStatePagerAdapter(fragmentManager) {
-    private val mTesetFragment = TestFragment.getInstance()
-    private val mTeset2Fragment = Test2Fragment.getInstance()
-    private val mTeset3Fragment = Test3Fragment.getInstance()
-    private val mTeset4Fragment = Test4Fragment.getInstance()
+class MainPagerAdapter(fragmentManager: FragmentManager): FragmentStatePagerAdapter(fragmentManager) {
+    private val mHomeFragment = HomeFragment.getInstance()
+    private val mTest2Fragment = Test2Fragment.getInstance()
+    private val mTest3Fragment = Test3Fragment.getInstance()
+    private val mMyInfoFragment = MyInfoFragment.getInstance()
 
     private val itemList = ArrayList<Int>()
 
     override fun getItem(position: Int): Fragment = when(position) {
 //        1 -> mGachiFragment
-        0 -> mTesetFragment
-        1 -> mTeset2Fragment
-        2 -> mTeset3Fragment
-        3 -> mTeset4Fragment
+        0 -> mHomeFragment
+        1 -> mTest2Fragment
+        2 -> mTest3Fragment
+        3 -> mMyInfoFragment
        else -> {
-           mTeset4Fragment
+           mMyInfoFragment
        }
     }
 

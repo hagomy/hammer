@@ -18,27 +18,44 @@ package com.pickth.hammer.view.fragment
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.pickth.hammer.R
-import kotlinx.android.synthetic.main.fragment_test.view.*
+import com.pickth.hammer.adapter.HomeItemAdapter
+import com.pickth.hammer.item.Goods
+import com.pickth.hammer.item.User
+import kotlinx.android.synthetic.main.fragment_home.view.*
 
 /**
  * Created by yonghoon on 2018-01-09
  * Blog   : http://blog.pickth.com
  */
 
-class TestFragment: Fragment() {
+class HomeFragment : Fragment() {
+
+    private lateinit var mAdapter: HomeItemAdapter
 
     companion object {
-        private val mInstance = TestFragment()
-        fun getInstance(): TestFragment = mInstance
+        private val mInstance = HomeFragment()
+        fun getInstance(): HomeFragment = mInstance
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val rootView = inflater.inflate(R.layout.fragment_test, container, false)
-        rootView.tv_test.text = "첫번째 페이지"
+        val rootView = inflater.inflate(R.layout.fragment_home, container, false)
+
+        mAdapter = HomeItemAdapter()
+        rootView.rv_home.apply {
+            adapter = mAdapter
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        }
+
+        for(i in 1 until 10) {
+            mAdapter.addItem(Goods("상품$i", "설명", i * 1000, i%3 == 1 , User("user$i")))
+        }
+
+        mAdapter.notifyDataSetChanged()
         return rootView
     }
 }

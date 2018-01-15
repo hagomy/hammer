@@ -1,8 +1,7 @@
 <resources>
     <string name="app_name">Hammer</string>
 
-    <string name="title_festival">Festival</string>
-    <string name="title_gachi">Gachi</string>
+    <string name="title_home">Home</string>
     <string name="title_chat">Chat</string>
     <string name="title_alarm">Alarm</string>
     <string name="title_myinfo">My info</string>
