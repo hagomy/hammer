@@ -16,6 +16,6 @@
     </style>
 
     <style name="AppTheme.NoTitle.SplashTheme">
-        <item name="android:windowBackground">@color/colorBrightGray00</item>
+        <item name="android:windowBackground">@drawable/splash</item>
     </style>
 </resources>
