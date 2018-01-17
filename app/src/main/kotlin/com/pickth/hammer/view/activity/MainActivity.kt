@@ -3,6 +3,7 @@ package com.pickth.hammer.view.activity
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
+import android.support.v4.view.GravityCompat
 import android.support.v4.view.ViewPager
 import android.view.MenuItem
 import com.pickth.hammer.R
@@ -45,10 +46,18 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
 
         // actionbar
         setSupportActionBar(main_toolbar)
-        supportActionBar?.setDisplayShowTitleEnabled(true)
-        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        supportActionBar?.run {
+            setDisplayShowTitleEnabled(true)
+
+            // icon
+            setHomeAsUpIndicator(R.drawable.ic_splash_hammer)
+            setDisplayHomeAsUpEnabled(true)
+        }
         title = getString(R.string.app_name)
 
+        // side navigation drawer
+
+        // bottom navigation
         mNavigation = main_navigation
         mNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
@@ -80,4 +89,14 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
         prevBottomNavigation.isChecked = true
     }
 
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+
+        when(item?.itemId) {
+            android.R.id.home -> {
+                dl_main.openDrawer(GravityCompat.START)
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
 }

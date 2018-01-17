@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.pickth.hammer.view.splash
+package com.pickth.hammer.view.activity
 
 import android.os.Bundle
 import android.os.Handler
