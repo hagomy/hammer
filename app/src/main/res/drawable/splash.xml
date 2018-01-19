@@ -2,13 +2,7 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android"
     android:opacity="opaque">
     <!-- opaque: 불투명함 -->
-    <item android:drawable="@color/colorWhite" />
-    <!--<item>-->
-        <!--<bitmap app:srcCompat="@drawable/ic_splash_hammer"-->
-            <!--android:gravity="center"-->
-            <!--android:src="@drawable/ic_splash_hammer" />-->
-    <!--</item>-->
-
+    <item android:drawable="@color/colorPrimary" />
     <item android:gravity="center"
-        android:drawable="@drawable/ic_splash_hammer" />
+        android:drawable="@drawable/hammer_icon2" />
 </layer-list>

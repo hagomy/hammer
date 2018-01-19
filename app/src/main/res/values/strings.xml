@@ -5,4 +5,7 @@
     <string name="title_chat">Chat</string>
     <string name="title_alarm">Alarm</string>
     <string name="title_myinfo">My info</string>
+
+    <string name="nav_open">open</string>
+    <string name="nav_close">close</string>
 </resources>

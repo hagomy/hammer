@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v4.view.ViewPager
+import android.support.v7.app.ActionBarDrawerToggle
 import android.view.MenuItem
 import com.pickth.hammer.R
 import com.pickth.hammer.adapter.MainPagerAdapter
@@ -50,12 +51,19 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
             setDisplayShowTitleEnabled(true)
 
             // icon
-            setHomeAsUpIndicator(R.drawable.ic_splash_hammer)
+            setHomeAsUpIndicator(R.drawable.ic_myinfo)
             setDisplayHomeAsUpEnabled(true)
         }
         title = getString(R.string.app_name)
 
         // side navigation drawer
+        val mDrawerToggle = ActionBarDrawerToggle(this,
+                dl_main,
+                main_toolbar,
+                R.string.nav_open,
+                R.string.nav_close)
+        dl_main.addDrawerListener(mDrawerToggle)
+        mDrawerToggle.syncState()
 
         // bottom navigation
         mNavigation = main_navigation
@@ -78,6 +86,7 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
     }
 
     override fun onPageScrollStateChanged(state: Int) {
+
     }
 
     override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
