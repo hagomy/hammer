@@ -1,7 +1,5 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
 
 android {
@@ -47,4 +45,15 @@ dependencies {
     // Anko
     implementation "org.jetbrains.anko:anko-commons:$anko_version"
     implementation "org.jetbrains.anko:anko-sdk25:$anko_version"
+
+    // glide
+    implementation ("com.github.bumptech.glide:glide:4.5.0") {
+        exclude group: "com.android.support"
+    }
+
+    implementation 'com.pickth:imageslider:1.0.1'
+}
+
+repositories {
+    mavenCentral()
 }

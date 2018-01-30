@@ -17,9 +17,11 @@
 package com.pickth.hammer.view.viewholder
 
 import android.view.View
+import com.bumptech.glide.Glide
 import com.pickth.commons.extensions.beVisible
 import com.pickth.commons.recyclerview.BaseRecyclerView
 import com.pickth.hammer.item.Goods
+import com.pickth.hammer.listener.ItemTouchListener
 import kotlinx.android.synthetic.main.item_goods.view.*
 
 /**
@@ -27,7 +29,7 @@ import kotlinx.android.synthetic.main.item_goods.view.*
  * Blog   : http://blog.pickth.com
  */
 
-class HomeItemViewHolder(view: View): BaseRecyclerView.BaseViewHolder<Goods>(view) {
+class HomeItemViewHolder(view: View, val itemTouchListener: ItemTouchListener): BaseRecyclerView.BaseViewHolder<Goods>(view) {
     override fun onBind(item: Goods) {
         with(itemView) {
             tv_home_goods_title.text = item.name
@@ -35,6 +37,14 @@ class HomeItemViewHolder(view: View): BaseRecyclerView.BaseViewHolder<Goods>(vie
             tv_home_item_price.text = "${item.price} 원"
             tv_home_goods_seller_nickname.text = item.user.nickname
             if(item.isHot) iv_home_goods_is_hot.beVisible()
+
+            Glide.with(context)
+                    .load(item.images[0])
+                    .into(iv_home_goods_img)
+
+            setOnClickListener {
+                itemTouchListener.onClick(0)
+            }
         }
     }
 }

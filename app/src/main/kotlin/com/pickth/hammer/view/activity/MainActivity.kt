@@ -1,16 +1,17 @@
 package com.pickth.hammer.view.activity
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v4.view.ViewPager
 import android.support.v7.app.ActionBarDrawerToggle
+import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.pickth.hammer.R
 import com.pickth.hammer.adapter.MainPagerAdapter
 import com.pickth.hammer.view.custom.MyBottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.nav_view.*
 
 class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
     private var mMainPagerAdapter: MainPagerAdapter? = null
@@ -45,14 +46,33 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        initLayout()
+
+        mMainPagerAdapter = MainPagerAdapter(supportFragmentManager).apply {
+            for (i in 0..3)
+                setListItem(i)
+            notifyDataSetChanged()
+        }
+
+        mViewPager = view_pager.apply {
+            adapter = mMainPagerAdapter
+            currentItem = 0
+            offscreenPageLimit = 4
+            addOnPageChangeListener(this@MainActivity)
+        }
+
+        prevBottomNavigation = mNavigation.menu.getItem(0)
+
+        ll_nav_item.setOnClickListener {
+
+        }
+    }
+
+    private fun initLayout() {
         // actionbar
         setSupportActionBar(main_toolbar)
         supportActionBar?.run {
             setDisplayShowTitleEnabled(true)
-
-            // icon
-            setHomeAsUpIndicator(R.drawable.ic_myinfo)
-            setDisplayHomeAsUpEnabled(true)
         }
         title = getString(R.string.app_name)
 
@@ -66,23 +86,9 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
         mDrawerToggle.syncState()
 
         // bottom navigation
-        mNavigation = main_navigation
-        mNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-
-        mMainPagerAdapter = MainPagerAdapter(supportFragmentManager).apply {
-            for(i in 0..3)
-                setListItem(i)
-            notifyDataSetChanged()
+        mNavigation = main_navigation.apply {
+            setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         }
-
-        mViewPager = view_pager.apply {
-            adapter = mMainPagerAdapter
-            currentItem = 0
-            offscreenPageLimit = 4
-            addOnPageChangeListener(this@MainActivity)
-        }
-
-        prevBottomNavigation = mNavigation.menu.getItem(0)
     }
 
     override fun onPageScrollStateChanged(state: Int) {
@@ -100,7 +106,7 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 
-        when(item?.itemId) {
+        when (item?.itemId) {
             android.R.id.home -> {
                 dl_main.openDrawer(GravityCompat.START)
             }

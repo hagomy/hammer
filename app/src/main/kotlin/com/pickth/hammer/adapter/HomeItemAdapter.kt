@@ -16,30 +16,52 @@
 
 package com.pickth.hammer.adapter
 
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.pickth.commons.recyclerview.BaseRecyclerView
 import com.pickth.hammer.R
 import com.pickth.hammer.item.Goods
+import com.pickth.hammer.listener.ItemTouchListener
 import com.pickth.hammer.view.viewholder.HomeItemViewHolder
+import java.util.ArrayList
 
 /**
  * Created by yonghoon on 2018-01-15
  * Blog   : http://blog.pickth.com
  */
 
-class HomeItemAdapter : BaseRecyclerView.BaseAdapter<Goods>() {
-    override fun onBindViewHolder(holder: BaseRecyclerView.BaseViewHolder<Goods>, position: Int) {
+class HomeItemAdapter : RecyclerView.Adapter<HomeItemViewHolder>() {
+    private var arrItems = ArrayList<Goods>()
+
+    override fun onBindViewHolder(holder: HomeItemViewHolder, position: Int) {
         holder.onBind(arrItems[position])
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseRecyclerView.BaseViewHolder<Goods> {
+    private lateinit var mItemTouchListener: ItemTouchListener
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeItemViewHolder {
         val itemView = LayoutInflater
                 .from(parent.context)
                 .inflate(R.layout.item_goods, parent, false)
 
-        return HomeItemViewHolder(itemView)
+        return HomeItemViewHolder(itemView, mItemTouchListener)
     }
 
     override fun getItemCount(): Int = arrItems.size
+
+    fun setItemTouchListener(itemTouchListener: ItemTouchListener) {
+        mItemTouchListener = itemTouchListener
+    }
+
+    fun getItems(): ArrayList<Goods> = arrItems
+
+    fun getItem(position: Int) = arrItems[position]
+
+    fun addItem(item: Goods) {
+        arrItems.add(item)
+    }
+
+    fun addItemAtLast(item: Goods) {
+        arrItems.add(itemCount, item)
+    }
 }

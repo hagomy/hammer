@@ -14,11 +14,13 @@
  * limitations under the License.
  */
 
-package com.pickth.hammer.item
+package com.pickth.hammer.listener
 
 /**
- * Created by yonghoon on 2018-01-15
+ * Created by yonghoon on 2018-01-29
  * Blog   : http://blog.pickth.com
  */
 
-data class Goods(var name: String, var explanation: String, var price: Int, var isHot: Boolean = false, var user: User, var images: ArrayList<Int> = ArrayList())
+interface ItemTouchListener {
+    fun onClick(position: Int)
+}
