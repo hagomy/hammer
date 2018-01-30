@@ -29,15 +29,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import android.widget.ScrollView
 import android.widget.TextView
 import com.pickth.commons.extensions.convertDpToPixel
 import com.pickth.hammer.R
 import com.pickth.hammer.listener.CategoryListener
 import com.pickth.hammer.util.GridSpacingItemDecoration
-import kotlinx.android.synthetic.main.category_item.view.*
+import kotlinx.android.synthetic.main.item_category.view.*
 import org.jetbrains.anko.backgroundColor
 import org.jetbrains.anko.leftPadding
+import org.jetbrains.anko.textColor
 
 /**
  * Created by yonghoon on 2018-01-30
@@ -45,9 +45,9 @@ import org.jetbrains.anko.leftPadding
  */
 
 class CategoryView : NestedScrollView {
-    constructor(context: Context): this(context, null, 0)
-    constructor(context: Context, attrs: AttributeSet): this(context, attrs, 0)
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int): super(context, attrs, defStyleAttr) {
+    constructor(context: Context) : this(context, null, 0)
+    constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
         initializeView()
     }
 
@@ -69,6 +69,7 @@ class CategoryView : NestedScrollView {
     }
 
     private fun initializeView() {
+        overScrollMode = View.OVER_SCROLL_NEVER
         addView(mRootLinearLayout)
     }
 
@@ -100,23 +101,26 @@ class CategoryView : NestedScrollView {
             gravity = Gravity.CENTER_VERTICAL
             backgroundColor = ContextCompat.getColor(context, R.color.colorWhite)
             typeface = Typeface.DEFAULT_BOLD
+            textColor = ContextCompat.getColor(context, R.color.colorBlack)
             text = title
+            textSize = 16f
         })
     }
 
     private fun addRecyclerView(items: ArrayList<String>) {
-        var itemsParam = LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT).apply {
+        var itemsParam = LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT).apply {
             //            setMargins(0, context.convertDpToPixel(8), 0, 0)
         }
 
-        val myAdapter = CategoryAdapter(mItemViewId, items,mTitles.size-1, mCategoryListener)
+        val myAdapter = CategoryAdapter(mItemViewId, items, mTitles.size - 1, mCategoryListener)
 
         var recyclerView = RecyclerView(context).apply {
             layoutParams = itemsParam
             overScrollMode = View.OVER_SCROLL_NEVER
+            isNestedScrollingEnabled = false
             adapter = myAdapter
             backgroundColor = ContextCompat.getColor(context, R.color.colorWhite)
-            layoutManager = GridLayoutManager(context, 2) as RecyclerView.LayoutManager
+            layoutManager = GridLayoutManager(context, 2)
             addItemDecoration(GridSpacingItemDecoration(context, 2, 0, false, true, true))
         }
 

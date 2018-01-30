@@ -13,7 +13,6 @@ import com.pickth.hammer.listener.CategoryListener
 import com.pickth.hammer.view.custom.MyBottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.nav_view.*
-import org.jetbrains.anko.toast
 
 class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
     private var mMainPagerAdapter: MainPagerAdapter? = null
@@ -145,8 +144,9 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
             add("수입식품 전문관")
             add("대용량 전문관")
         }
+
         rv_category.run {
-            setItemViewId(R.layout.category_item)
+            setItemViewId(R.layout.item_category)
             setCategoryListener(object: CategoryListener {
                 override fun onClickItem(categoryPosition: Int, itemPosition: Int) {
 //                    toast("${titles[categoryPosition]} ${item0[itemPosition]}을 누르셨습니다")
@@ -181,5 +181,15 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+
+        if(dl_main.isDrawerOpen(GravityCompat.START)) {
+            dl_main.closeDrawer(GravityCompat.START)
+            return
+        }
+
+        super.onBackPressed()
     }
 }
