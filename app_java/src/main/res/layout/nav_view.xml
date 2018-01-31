@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="start"
     android:id="@+id/ll_nav_item"
-    android:background="#FFFFFFFF"
+    android:background="#a4aab3"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -36,4 +36,8 @@
 
     </RelativeLayout>
 
+    <com.example.kounchoi.myapplication.CategoryView
+        android:id="@+id/cv_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>
