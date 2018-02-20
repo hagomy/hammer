@@ -62,6 +62,7 @@ class GridSpacingItemDecoration(context: Context, private val spanCount: Int, pr
 
     override fun onDrawOver(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
         val childCount = parent.childCount
+
         for(i in 0 until childCount-1) {
             val child = parent.getChildAt(i)
 
