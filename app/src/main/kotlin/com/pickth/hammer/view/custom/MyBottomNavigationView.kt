@@ -26,20 +26,20 @@ import android.util.AttributeSet
  * Blog   : http://blog.pickth.com
  */
 
-class MyBottomNavigationView (context: Context, attrs: AttributeSet): BottomNavigationView(context, attrs) {
-    init {
-        centerMenuIcon()
+class MyBottomNavigationView(context: Context, attrs: AttributeSet) : BottomNavigationView(context, attrs) {
+  init {
+    centerMenuIcon()
+  }
+
+  private fun centerMenuIcon() {
+
+    val menuView: BottomNavigationMenuView = getChildAt(0) as BottomNavigationMenuView
+
+    menuView::class.java.getDeclaredField("mShiftingMode").apply {
+      isAccessible = true
+      setBoolean(menuView, false)
+      isAccessible = false
     }
 
-    private fun centerMenuIcon() {
-
-        val menuView: BottomNavigationMenuView = getChildAt(0) as BottomNavigationMenuView
-
-        menuView::class.java.getDeclaredField("mShiftingMode").apply {
-            isAccessible = true
-            setBoolean(menuView, false)
-            isAccessible = false
-        }
-
-    }
+  }
 }

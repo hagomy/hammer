@@ -31,37 +31,37 @@ import java.util.ArrayList
  */
 
 class HomeItemAdapter : RecyclerView.Adapter<HomeItemViewHolder>() {
-    private var arrItems = ArrayList<Goods>()
+  private var arrItems = ArrayList<Goods>()
 
-    override fun onBindViewHolder(holder: HomeItemViewHolder, position: Int) {
-        holder.onBind(arrItems[position])
-    }
+  override fun onBindViewHolder(holder: HomeItemViewHolder, position: Int) {
+    holder.onBind(arrItems[position])
+  }
 
-    private lateinit var mItemTouchListener: ItemTouchListener
+  private lateinit var mItemTouchListener: ItemTouchListener
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeItemViewHolder {
-        val itemView = LayoutInflater
-                .from(parent.context)
-                .inflate(R.layout.item_goods, parent, false)
+  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeItemViewHolder {
+    val itemView = LayoutInflater
+        .from(parent.context)
+        .inflate(R.layout.item_goods, parent, false)
 
-        return HomeItemViewHolder(itemView, mItemTouchListener)
-    }
+    return HomeItemViewHolder(itemView, mItemTouchListener)
+  }
 
-    override fun getItemCount(): Int = arrItems.size
+  override fun getItemCount(): Int = arrItems.size
 
-    fun setItemTouchListener(itemTouchListener: ItemTouchListener) {
-        mItemTouchListener = itemTouchListener
-    }
+  fun setItemTouchListener(itemTouchListener: ItemTouchListener) {
+    mItemTouchListener = itemTouchListener
+  }
 
-    fun getItems(): ArrayList<Goods> = arrItems
+  fun getItems(): ArrayList<Goods> = arrItems
 
-    fun getItem(position: Int) = arrItems[position]
+  fun getItem(position: Int) = arrItems[position]
 
-    fun addItem(item: Goods) {
-        arrItems.add(item)
-    }
+  fun addItem(item: Goods) {
+    arrItems.add(item)
+  }
 
-    fun addItemAtLast(item: Goods) {
-        arrItems.add(itemCount, item)
-    }
+  fun addItemAtLast(item: Goods) {
+    arrItems.add(itemCount, item)
+  }
 }

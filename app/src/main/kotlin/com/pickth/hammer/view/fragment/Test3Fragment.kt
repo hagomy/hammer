@@ -15,14 +15,14 @@ import kotlinx.android.synthetic.main.fragment_test.view.*
 
 class Test3Fragment : Fragment() {
 
-    companion object {
-        private val mInstance = Test3Fragment()
-        fun getInstance(): Test3Fragment = mInstance
-    }
+  companion object {
+    private val mInstance = Test3Fragment()
+    fun getInstance(): Test3Fragment = mInstance
+  }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val rootView = inflater.inflate(R.layout.fragment_test, container, false)
-        rootView.tv_test.text = "세번째 페이지"
-        return rootView
-    }
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    val rootView = inflater.inflate(R.layout.fragment_test, container, false)
+    rootView.tv_test.text = "세번째 페이지"
+    return rootView
+  }
 }

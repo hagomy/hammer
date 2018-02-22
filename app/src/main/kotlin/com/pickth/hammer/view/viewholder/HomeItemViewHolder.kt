@@ -29,22 +29,20 @@ import kotlinx.android.synthetic.main.item_goods.view.*
  * Blog   : http://blog.pickth.com
  */
 
-class HomeItemViewHolder(view: View, val itemTouchListener: ItemTouchListener): BaseRecyclerView.BaseViewHolder<Goods>(view) {
-    override fun onBind(item: Goods) {
-        with(itemView) {
-            tv_home_goods_title.text = item.name
-            tv_home_goods_explanation.text = item.explanation
-            tv_home_item_price.text = "${item.price} 원"
-            tv_home_goods_seller_nickname.text = item.user.nickname
-            if(item.isHot) iv_home_goods_is_hot.beVisible()
+class HomeItemViewHolder(view: View, val itemTouchListener: ItemTouchListener) : BaseRecyclerView.BaseViewHolder<Goods>(view) {
+  override fun onBind(item: Goods) {
+    with(itemView) {
+      tv_home_goods_title.text = item.name
+      tv_home_goods_explanation.text = item.explanation
+      tv_home_item_price.text = "${item.price} 원"
+      tv_home_goods_seller_nickname.text = item.user.nickname
+      if(item.isHot) iv_home_goods_is_hot.beVisible()
 
-            Glide.with(context)
-                    .load(item.images[0])
-                    .into(iv_home_goods_img)
+      Glide.with(context).load(item.images[0]).into(iv_home_goods_img)
 
-            setOnClickListener {
-                itemTouchListener.onClick(0)
-            }
-        }
+      setOnClickListener {
+        itemTouchListener.onClick(0)
+      }
     }
+  }
 }

@@ -15,13 +15,13 @@ import kotlinx.android.synthetic.main.fragment_test.view.*
 
 class MyInfoFragment : Fragment() {
 
-    companion object {
-        private val mInstance = MyInfoFragment()
-        fun getInstance(): MyInfoFragment = mInstance
-    }
+  companion object {
+    private val mInstance = MyInfoFragment()
+    fun getInstance(): MyInfoFragment = mInstance
+  }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val rootView = inflater.inflate(R.layout.fragment_myinfo, container, false)
-        return rootView
-    }
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    val rootView = inflater.inflate(R.layout.fragment_myinfo, container, false)
+    return rootView
+  }
 }

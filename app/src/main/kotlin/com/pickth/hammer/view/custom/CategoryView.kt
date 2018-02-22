@@ -45,122 +45,120 @@ import org.jetbrains.anko.textColor
  */
 
 class CategoryView : NestedScrollView {
-    constructor(context: Context) : this(context, null, 0)
-    constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        initializeView()
+  constructor(context: Context) : this(context, null, 0)
+  constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
+  constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+    initializeView()
+  }
+
+  private lateinit var mCategoryListener: CategoryListener
+  private var mTitles = ArrayList<String>()
+  private var mItemViewId = 0
+  private var mRootLinearLayout = LinearLayout(context).apply {
+    orientation = LinearLayout.VERTICAL
+    layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
+  }
+
+  fun setCategoryListener(categoryListener: CategoryListener) {
+    mCategoryListener = categoryListener
+  }
+
+  fun setItemViewId(itemViewId: Int) {
+    mItemViewId = itemViewId
+  }
+
+  private fun initializeView() {
+    overScrollMode = View.OVER_SCROLL_NEVER
+    addView(mRootLinearLayout)
+  }
+
+  fun clearCategory() {
+    mTitles.clear()
+    (mRootLinearLayout as ViewGroup).removeAllViews()
+  }
+
+  fun addCategory(title: String, items: ArrayList<String>) {
+    addDivider(8)
+    addTitle(title)
+    addRecyclerView(items)
+  }
+
+  private fun addDivider(marginSize: Int = 0) {
+    val divider = View(context).apply {
+      layoutParams = LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, context.convertDpToPixel(1)).apply {
+        setMargins(0, context.convertDpToPixel(marginSize), 0, 0)
+      }
+      backgroundColor = ContextCompat.getColor(context, R.color.colorBlack)
     }
 
-    private lateinit var mCategoryListener: CategoryListener
-    private var mTitles = ArrayList<String>()
-    private var mItemViewId = 0
-    private var mRootLinearLayout = LinearLayout(context).apply {
-        orientation = LinearLayout.VERTICAL
-        layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
+    mRootLinearLayout.addView(divider)
+  }
+
+  private fun addTitle(title: String) {
+    var titleParam = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, context.convertDpToPixel(36))
+
+    mTitles.add(title)
+
+    mRootLinearLayout.addView(TextView(context).apply {
+      layoutParams = titleParam
+      leftPadding = context.convertDpToPixel(8)
+      gravity = Gravity.CENTER_VERTICAL
+      backgroundColor = ContextCompat.getColor(context, R.color.colorWhite)
+      typeface = Typeface.DEFAULT_BOLD
+      textColor = ContextCompat.getColor(context, R.color.colorBlack)
+      text = title
+      textSize = 16f
+    }
+    )
+  }
+
+  private fun addRecyclerView(items: ArrayList<String>) {
+    var itemsParam = LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT).apply {
+      //            setMargins(0, context.convertDpToPixel(8), 0, 0)
+    }
+
+    val myAdapter = CategoryAdapter(mItemViewId, items, mTitles.size - 1, mCategoryListener)
+
+    var recyclerView = RecyclerView(context).apply {
+      layoutParams = itemsParam
+      overScrollMode = View.OVER_SCROLL_NEVER
+      isNestedScrollingEnabled = false
+      adapter = myAdapter
+      backgroundColor = ContextCompat.getColor(context, R.color.colorWhite)
+      layoutManager = GridLayoutManager(context, 2)
+      addItemDecoration(GridSpacingItemDecoration(context, 2, 0, false, true, true))
     }
 
 
-    fun setCategoryListener(categoryListener: CategoryListener) {
-        mCategoryListener = categoryListener
+    mRootLinearLayout.addView(recyclerView)
+  }
+
+  private inner class CategoryAdapter(val itemViewId: Int, val itemNames: ArrayList<String>, val categoryPosition: Int, val categoryListener: CategoryListener) :
+      RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
+
+    override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
+      holder.onBind(categoryPosition, position, itemNames[position])
     }
 
-    fun setItemViewId(itemViewId: Int) {
-        mItemViewId = itemViewId
+    override fun getItemCount(): Int = itemNames.size
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
+      val itemView = LayoutInflater.from(parent.context).inflate(itemViewId, parent, false)
+      return CategoryViewHolder(itemView)
     }
 
-    private fun initializeView() {
-        overScrollMode = View.OVER_SCROLL_NEVER
-        addView(mRootLinearLayout)
-    }
+    private inner class CategoryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+      fun onBind(categoryPosition: Int, itemPosition: Int, item: String) {
+        with(itemView) {
+          tv_category.text = item
 
-    fun clearCategory() {
-        mTitles.clear()
-        (mRootLinearLayout as ViewGroup).removeAllViews()
-    }
-
-    fun addCategory(title: String, items: ArrayList<String>) {
-        addDivider(8)
-        addTitle(title)
-        addRecyclerView(items)
-    }
-
-    private fun addDivider(marginSize: Int = 0) {
-        val divider = View(context).apply {
-            layoutParams = LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, context.convertDpToPixel(1)).apply {
-                setMargins(0, context.convertDpToPixel(marginSize), 0, 0)
-            }
-            backgroundColor = ContextCompat.getColor(context, R.color.colorBlack)
+          setOnClickListener {
+            Log.i("ssssss", "categoryPosition ${categoryPosition} itemPosition ${itemPosition}")
+            categoryListener.onClickItem(categoryPosition, itemPosition)
+          }
         }
-
-        mRootLinearLayout.addView(divider)
+      }
     }
-
-    private fun addTitle(title: String) {
-        var titleParam = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, context.convertDpToPixel(36))
-
-        mTitles.add(title)
-
-        mRootLinearLayout.addView(TextView(context).apply {
-            layoutParams = titleParam
-            leftPadding = context.convertDpToPixel(8)
-            gravity = Gravity.CENTER_VERTICAL
-            backgroundColor = ContextCompat.getColor(context, R.color.colorWhite)
-            typeface = Typeface.DEFAULT_BOLD
-            textColor = ContextCompat.getColor(context, R.color.colorBlack)
-            text = title
-            textSize = 16f
-        })
-    }
-
-    private fun addRecyclerView(items: ArrayList<String>) {
-        var itemsParam = LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT).apply {
-            //            setMargins(0, context.convertDpToPixel(8), 0, 0)
-        }
-
-        val myAdapter = CategoryAdapter(mItemViewId, items, mTitles.size - 1, mCategoryListener)
-
-        var recyclerView = RecyclerView(context).apply {
-            layoutParams = itemsParam
-            overScrollMode = View.OVER_SCROLL_NEVER
-            isNestedScrollingEnabled = false
-            adapter = myAdapter
-            backgroundColor = ContextCompat.getColor(context, R.color.colorWhite)
-            layoutManager = GridLayoutManager(context, 2)
-            addItemDecoration(GridSpacingItemDecoration(context, 2, 0, false, true, true))
-        }
-
-
-        mRootLinearLayout.addView(recyclerView)
-    }
-
-
-    private inner class CategoryAdapter(val itemViewId: Int, val itemNames: ArrayList<String>, val categoryPosition: Int, val categoryListener: CategoryListener) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
-
-        override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
-            holder.onBind(categoryPosition, position, itemNames[position])
-        }
-
-        override fun getItemCount(): Int = itemNames.size
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
-            val itemView = LayoutInflater
-                    .from(parent.context)
-                    .inflate(itemViewId, parent, false)
-            return CategoryViewHolder(itemView)
-        }
-
-        private inner class CategoryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-            fun onBind(categoryPosition: Int, itemPosition: Int, item: String) {
-                with(itemView) {
-                    tv_category.text = item
-
-                    setOnClickListener {
-                        Log.i("ssssss", "categoryPosition ${categoryPosition} itemPosition ${itemPosition}")
-                        categoryListener.onClickItem(categoryPosition, itemPosition)
-                    }
-                }
-            }
-        }
-    }
+  }
 
 }

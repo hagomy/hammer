@@ -1,43 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_nav_item"
     android:layout_width="320dp"
     android:layout_height="match_parent"
     android:layout_gravity="start"
     android:background="@color/colorBrightGray00"
-    android:id="@+id/ll_nav_item"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="135dp"
-        android:background="@color/colorPrimary"
-        android:orientation="horizontal">
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="135dp"
+      android:background="@color/colorPrimary"
+      android:orientation="horizontal"
+      >
 
-        <ImageView
-            android:id="@+id/imgNavUser"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="11dp"
-            android:layout_marginTop="22dp"
-            android:background="@color/colorWhite" />
+    <ImageView
+        android:id="@+id/imgNavUser"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="11dp"
+        android:layout_marginTop="22dp"
+        android:background="@color/colorWhite"
+        />
 
-        <TextView
-            android:id="@+id/txtNavUserNickName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="7dp"
-            android:layout_marginTop="34dp"
-            android:layout_toRightOf="@id/imgNavUser"
-            android:text="사용자 이름"
-            android:textColor="@color/colorWhite"
-            android:textSize="16sp" />
-    </RelativeLayout>
+    <TextView
+        android:id="@+id/txtNavUserNickName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="7dp"
+        android:layout_marginTop="34dp"
+        android:layout_toRightOf="@id/imgNavUser"
+        android:text="사용자 이름"
+        android:textColor="@color/colorWhite"
+        android:textSize="16sp"
+        />
+  </RelativeLayout>
 
-    <com.pickth.hammer.view.custom.CategoryView
-        android:id="@+id/rv_category"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+  <com.pickth.hammer.view.custom.CategoryView
+      android:id="@+id/rv_category"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      />
 
 </LinearLayout>

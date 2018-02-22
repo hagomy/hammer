@@ -30,98 +30,99 @@ import com.pickth.hammer.R
  * Blog   : http://blog.pickth.com
  */
 
-class GridSpacingItemDecoration(context: Context, private val spanCount: Int, private var spacing: Int, private val includeEdge: Boolean, private val useDivider: Boolean = false, private val includeEdgeDivider: Boolean = false): RecyclerView.ItemDecoration() {
-    init {
-        spacing = context.convertDpToPixel(spacing)
+class GridSpacingItemDecoration(context: Context, private val spanCount: Int, private var spacing: Int, private val includeEdge: Boolean, private val useDivider: Boolean = false, private val includeEdgeDivider: Boolean = false) :
+    RecyclerView.ItemDecoration() {
+  init {
+    spacing = context.convertDpToPixel(spacing)
+  }
+
+  private val divider = ContextCompat.getDrawable(context, R.drawable.line_divider)
+
+  override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
+
+    val position = parent.getChildAdapterPosition(view) // item position
+    val column = position % spanCount // item column
+
+    with(outRect) {
+      if(includeEdge) {
+        left = spacing - column * spacing / spanCount // spacing - column * ((1f / spanCount) * spacing)
+        right = (column + 1) * spacing / spanCount // (column + 1) * ((1f / spanCount) * spacing)
+        if(position < spanCount) { // top edge
+          top = spacing
+        }
+        bottom = spacing // item bottom
+      } else {
+        left = column * spacing / spanCount // column * ((1f / spanCount) * spacing)
+        right = spacing - (column + 1) * spacing / spanCount // spacing - (column + 1) * ((1f /    spanCount) * spacing)
+        if(position >= spanCount) {
+          top = spacing // item top
+        }
+      }
     }
-    private val divider = ContextCompat.getDrawable(context, R.drawable.line_divider)
+  }
 
+  override fun onDrawOver(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
+    val childCount = parent.childCount
 
-    override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
+    for(i in 0 until childCount - 1) {
+      val child = parent.getChildAt(i)
 
-        val position = parent.getChildAdapterPosition(view) // item position
-        val column = position % spanCount // item column
+      val params = child.layoutParams as RecyclerView.LayoutParams
 
-        with(outRect) {
-            if (includeEdge) {
-                left = spacing - column * spacing / spanCount // spacing - column * ((1f / spanCount) * spacing)
-                right = (column + 1) * spacing / spanCount // (column + 1) * ((1f / spanCount) * spacing)
-                if (position < spanCount) { // top edge
-                    top = spacing
-                }
-                bottom = spacing // item bottom
-            } else {
-                left = column * spacing / spanCount // column * ((1f / spanCount) * spacing)
-                right = spacing - (column + 1) * spacing / spanCount // spacing - (column + 1) * ((1f /    spanCount) * spacing)
-                if (position >= spanCount) {
-                    top = spacing // item top
-                }
-            }
+      if(useDivider && divider != null && includeEdgeDivider) {
+        // 처음 아이템들 위에 가로방향 그려주기, 마지막 아이템의 세로방향 그려주기
+        if(childCount > i && i in 0..spanCount) {
+          val left = params.marginStart
+          val right = child.right
+          val top = child.top - params.topMargin - (spacing / 2)
+          val bottom = top + divider.intrinsicHeight
+
+          divider.setBounds(left, top, right, bottom)
+          divider.draw(c)
         }
-    }
+      }
 
-    override fun onDrawOver(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
-        val childCount = parent.childCount
+      // 아래에서 오른쪽 그리기, 오른쪽에서 아래로 그리기, 끝에서 2번째 까지
+      if(useDivider && divider != null) {
+        // 오른쪽으로 그리기
+        var left = params.marginStart
+        var right = child.right
+        var top = child.bottom + params.bottomMargin + (spacing / 2)
+        var bottom = top + divider.intrinsicHeight
 
-        for(i in 0 until childCount-1) {
-            val child = parent.getChildAt(i)
+        divider.setBounds(left, top, right, bottom)
+        divider.draw(c)
 
-            val params = child.layoutParams as RecyclerView.LayoutParams
+        if(spanCount > 1) {
+          // 아래로 그리기
+          left = child.right + params.rightMargin + (spacing / 2)
+          right = left + divider.intrinsicWidth
+          top = params.topMargin
+          bottom = child.bottom
 
-            if(useDivider && divider != null && includeEdgeDivider) {
-                // 처음 아이템들 위에 가로방향 그려주기, 마지막 아이템의 세로방향 그려주기
-                if(childCount > i && i in 0..spanCount) {
-                    val left = params.marginStart
-                    val right = child.right
-                    val top = child.top - params.topMargin - (spacing/2)
-                    val bottom = top + divider.intrinsicHeight
-
-                    divider.setBounds(left, top, right, bottom)
-                    divider.draw(c)
-                }
-            }
-
-            // 아래에서 오른쪽 그리기, 오른쪽에서 아래로 그리기, 끝에서 2번째 까지
-            if(useDivider && divider != null) {
-                // 오른쪽으로 그리기
-                var left = params.marginStart
-                var right = child.right
-                var top = child.bottom + params.bottomMargin + (spacing/2)
-                var bottom = top + divider.intrinsicHeight
-
-                divider.setBounds(left, top, right, bottom)
-                divider.draw(c)
-
-                if(spanCount > 1) {
-                    // 아래로 그리기
-                    left = child.right + params.rightMargin + (spacing / 2)
-                    right = left + divider.intrinsicWidth
-                    top = params.topMargin
-                    bottom = child.bottom
-
-                    // 좌표값 설정
-                    divider.setBounds(left, top, right, bottom)
-                    divider.draw(c)
-                }
-            }
-
+          // 좌표값 설정
+          divider.setBounds(left, top, right, bottom)
+          divider.draw(c)
         }
-
-        if(childCount > spanCount && childCount % spanCount != 0 && useDivider && divider != null && includeEdgeDivider) {
-            for (i in childCount - (childCount % spanCount) until childCount) {
-                val child = parent.getChildAt(i)
-                val params = child.layoutParams as RecyclerView.LayoutParams
-
-                val left = child.right + params.rightMargin + (spacing / 2)
-                val right = left + divider.intrinsicWidth
-                val top = params.topMargin
-                val bottom = child.bottom
-
-                // 좌표값 설정
-                divider.setBounds(left, top, right, bottom)
-                divider.draw(c)
-            }
-        }
+      }
 
     }
+
+    if(childCount > spanCount && childCount % spanCount != 0 && useDivider && divider != null && includeEdgeDivider) {
+      for(i in childCount - (childCount % spanCount) until childCount) {
+        val child = parent.getChildAt(i)
+        val params = child.layoutParams as RecyclerView.LayoutParams
+
+        val left = child.right + params.rightMargin + (spacing / 2)
+        val right = left + divider.intrinsicWidth
+        val top = params.topMargin
+        val bottom = child.bottom
+
+        // 좌표값 설정
+        divider.setBounds(left, top, right, bottom)
+        divider.draw(c)
+      }
+    }
+
+  }
 }

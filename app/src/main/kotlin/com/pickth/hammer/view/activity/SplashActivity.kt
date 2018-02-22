@@ -28,12 +28,12 @@ import org.jetbrains.anko.startActivity
  */
 
 class SplashActivity : BaseActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Handler().postDelayed(
-                {
-                    startActivity<MainActivity>()
-                    finish()
-                }, 8 * 100)
-    }
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    Handler().postDelayed({
+      startActivity<MainActivity>()
+      finish()
+    }, 8 * 100
+    )
+  }
 }

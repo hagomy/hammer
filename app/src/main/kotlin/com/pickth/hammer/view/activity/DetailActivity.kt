@@ -27,41 +27,43 @@ import kotlinx.android.synthetic.main.activity_detail.*
  * Blog   : http://blog.pickth.com
  */
 
-class DetailActivity: AppCompatActivity() {
+class DetailActivity : AppCompatActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detail)
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContentView(R.layout.activity_detail)
 
-        // actionbar
-        setSupportActionBar(detail_toolbar)
-        supportActionBar?.run {
-            setDisplayShowTitleEnabled(false)
+    // actionbar
+    setSupportActionBar(detail_toolbar)
+    supportActionBar?.run {
+      setDisplayShowTitleEnabled(false)
 
-            // icon
-            setHomeAsUpIndicator(R.drawable.ic_back)
-            setDisplayHomeAsUpEnabled(true)
-        }
-
-        is_detail.addItems(ArrayList<Int>().apply {
-            add(R.drawable.e_0)
-            add(R.drawable.e_1)
-            add(R.drawable.e_2)
-            add(R.drawable.e_3)
-            add(R.drawable.e_4)
-            add(R.drawable.e_5)
-            add(R.drawable.e_6)
-        })
+      // icon
+      setHomeAsUpIndicator(R.drawable.ic_back)
+      setDisplayHomeAsUpEnabled(true)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-
-        when(item?.itemId) {
-            android.R.id.home -> {
-                finish()
-            }
+    is_detail.addItems(
+        ArrayList<Int>().apply {
+          add(R.drawable.e_0)
+          add(R.drawable.e_1)
+          add(R.drawable.e_2)
+          add(R.drawable.e_3)
+          add(R.drawable.e_4)
+          add(R.drawable.e_5)
+          add(R.drawable.e_6)
         }
+    )
+  }
 
-        return super.onOptionsItemSelected(item)
+  override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+
+    when (item?.itemId) {
+      android.R.id.home -> {
+        finish()
+      }
     }
+
+    return super.onOptionsItemSelected(item)
+  }
 }

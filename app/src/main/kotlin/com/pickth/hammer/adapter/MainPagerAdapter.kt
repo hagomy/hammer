@@ -29,30 +29,30 @@ import com.pickth.hammer.view.fragment.HomeFragment
  * Blog   : http://blog.pickth.com
  */
 
-class MainPagerAdapter(fragmentManager: FragmentManager): FragmentStatePagerAdapter(fragmentManager) {
-    private val mHomeFragment = HomeFragment.getInstance()
-    private val mTest2Fragment = Test2Fragment.getInstance()
-    private val mTest3Fragment = Test3Fragment.getInstance()
-    private val mMyInfoFragment = MyInfoFragment.getInstance()
+class MainPagerAdapter(fragmentManager: FragmentManager) : FragmentStatePagerAdapter(fragmentManager) {
+  private val mHomeFragment = HomeFragment.getInstance()
+  private val mTest2Fragment = Test2Fragment.getInstance()
+  private val mTest3Fragment = Test3Fragment.getInstance()
+  private val mMyInfoFragment = MyInfoFragment.getInstance()
 
-    private val itemList = ArrayList<Int>()
+  private val itemList = ArrayList<Int>()
 
-    override fun getItem(position: Int): Fragment = when(position) {
+  override fun getItem(position: Int): Fragment = when (position) {
 //        1 -> mGachiFragment
-        0 -> mHomeFragment
-        1 -> mTest2Fragment
-        2 -> mTest3Fragment
-        3 -> mMyInfoFragment
-       else -> {
-           mMyInfoFragment
-       }
+    0 -> mHomeFragment
+    1 -> mTest2Fragment
+    2 -> mTest3Fragment
+    3 -> mMyInfoFragment
+    else -> {
+      mMyInfoFragment
     }
+  }
 
-    fun setListItem(position: Int) {
-        itemList.add(position)
-    }
+  fun setListItem(position: Int) {
+    itemList.add(position)
+  }
 
-    fun getListItem(position: Int): Int = itemList[position]
+  fun getListItem(position: Int): Int = itemList[position]
 
-    override fun getCount(): Int = itemList.size
+  override fun getCount(): Int = itemList.size
 }
