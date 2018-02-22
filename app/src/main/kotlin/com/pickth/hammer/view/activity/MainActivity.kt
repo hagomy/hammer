@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.MenuItem
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.pickth.hammer.R
 import com.pickth.hammer.adapter.MainPagerAdapter
@@ -18,6 +19,8 @@ import kotlinx.android.synthetic.main.nav_view.*
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.ValueEventListener
+import com.pickth.hammer.util.UserInfoManager
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 
 class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
@@ -118,8 +121,7 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
     title = getString(R.string.app_name)
 
     // side navigation drawer
-    val mDrawerToggle = ActionBarDrawerToggle(this, dl_main, main_toolbar, R.string.nav_open, R.string.nav_close
-    )
+    val mDrawerToggle = ActionBarDrawerToggle(this, dl_main, main_toolbar, R.string.nav_open, R.string.nav_close)
     dl_main.addDrawerListener(mDrawerToggle)
     mDrawerToggle.syncState()
 
@@ -128,16 +130,24 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
       setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
     }
 
+    txtNavUserNickName.text = FirebaseAuth.getInstance().currentUser?.email
+
     rv_category.run {
       setItemViewId(R.layout.item_category)
       setCategoryListener(object : CategoryListener {
-        override fun onClickItem(categoryPosition: Int, itemPosition: Int
-        ) {
+        override fun onClickItem(categoryPosition: Int, itemPosition: Int) {
           toast("${mCategoryCodes[categoryPosition][itemPosition]}을 누르셨습니다")
         }
       }
       )
 
+    }
+
+    tv_sign_out.setOnClickListener {
+      UserInfoManager.clearUserInfo(this)
+      FirebaseAuth.getInstance().signOut()
+      startActivity<SignInActivity>()
+      finish()
     }
   }
 

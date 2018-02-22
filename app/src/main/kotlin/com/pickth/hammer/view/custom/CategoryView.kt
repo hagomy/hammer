@@ -77,6 +77,14 @@ class CategoryView : NestedScrollView {
     (mRootLinearLayout as ViewGroup).removeAllViews()
   }
 
+  fun getCategoryName(position: Int): String? {
+    if(mTitles.size - 1 < position) {
+      // out of index
+      return null
+    }
+    return mTitles[position]
+  }
+
   fun addCategory(title: String, items: ArrayList<String>) {
     addDivider(8)
     addTitle(title)

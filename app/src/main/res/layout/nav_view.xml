@@ -23,6 +23,7 @@
         android:layout_marginLeft="11dp"
         android:layout_marginTop="22dp"
         android:background="@color/colorWhite"
+        android:visibility="gone"
         />
 
     <TextView
@@ -36,6 +37,17 @@
         android:text="사용자 이름"
         android:textColor="@color/colorWhite"
         android:textSize="16sp"
+        />
+    <TextView
+        android:id="@+id/tv_sign_out"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="3dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:text="sign out"
+        android:textColor="@color/colorWhite"
         />
   </RelativeLayout>
 

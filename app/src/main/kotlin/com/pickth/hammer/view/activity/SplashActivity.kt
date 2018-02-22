@@ -18,7 +18,10 @@ package com.pickth.hammer.view.activity
 
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
+import com.google.firebase.auth.FirebaseAuth
 import com.pickth.commons.view.activitys.BaseActivity
+import com.pickth.hammer.util.UserInfoManager
 import com.pickth.hammer.view.activity.MainActivity
 import org.jetbrains.anko.startActivity
 
@@ -28,12 +31,38 @@ import org.jetbrains.anko.startActivity
  */
 
 class SplashActivity : BaseActivity() {
+  val TAG = javaClass.simpleName
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    Handler().postDelayed({
-      startActivity<MainActivity>()
-      finish()
-    }, 8 * 100
-    )
+    val user = FirebaseAuth.getInstance().currentUser
+    if(user != null) {
+      Log.d(TAG, "onAuthStateChanged:signed_in: ${user.photoUrl}")
+      user.getIdToken(true)
+          .addOnCompleteListener {
+            if(it.isSuccessful) {
+              Log.d(TAG, "user token: ${it.result.token.toString()}")
+              UserInfoManager.firebaseUserToken = it.result.token.toString()
+              Log.d(TAG, "user info: ${UserInfoManager.getUser(this).toString()}")
+              val user = UserInfoManager.getUser(this)
+              startToMainActivity()
+            }
+          }
+
+    } else {
+      Log.d(TAG, "onAuthStateChanged:signed_out")
+      startToSignInActivity()
+    }
+
+  }
+
+  private fun startToMainActivity() {
+    startActivity<MainActivity>()
+    finish()
+  }
+
+  private fun startToSignInActivity() {
+    startActivity<SignInActivity>()
+    finish()
   }
 }

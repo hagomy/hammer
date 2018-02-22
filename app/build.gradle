@@ -4,66 +4,76 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.gms.google-services'
 
 android {
-    compileSdkVersion propCompileSdkVersion
-    defaultConfig {
-        applicationId "com.pickth.hammer"
-        minSdkVersion propMinSdkVersion
-        targetSdkVersion propTargetSdkVersion
-        versionCode propVersionCode
-        versionName propVersionName
-        vectorDrawables.useSupportLibrary = true
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+  compileSdkVersion propCompileSdkVersion
+  defaultConfig {
+    applicationId "com.pickth.hammer"
+    minSdkVersion propMinSdkVersion
+    targetSdkVersion propTargetSdkVersion
+    versionCode propVersionCode
+    versionName propVersionName
+    vectorDrawables.useSupportLibrary = true
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
-            applicationVariants.all { variant ->
-                variant.outputs.all {
-                    outputFileName = "hammer_v.${defaultConfig.versionName}.apk"
-                }
-            }
+      applicationVariants.all { variant ->
+        variant.outputs.all {
+          outputFileName = "hammer_v.${defaultConfig.versionName}.apk"
         }
+      }
     }
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
-    }
-    packagingOptions {
-        exclude 'META-INF/commons_release.kotlin_module'
-    }
+  }
+  sourceSets {
+    main.java.srcDirs += 'src/main/kotlin'
+  }
+  packagingOptions {
+    exclude 'META-INF/commons_release.kotlin_module'
+  }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+  implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    // support
-    implementation "com.android.support:appcompat-v7:$support_libs"
-    implementation "com.android.support:design:$support_libs"
-    implementation "com.android.support:recyclerview-v7:$support_libs"
-    implementation "com.android.support:support-vector-drawable:$support_libs"
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    implementation "com.android.support:support-vector-drawable:$support_libs"
+  // support
+  implementation "com.android.support:appcompat-v7:$support_libs"
+  implementation "com.android.support:design:$support_libs"
+  implementation "com.android.support:recyclerview-v7:$support_libs"
+  implementation "com.android.support:support-vector-drawable:$support_libs"
+  implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 
-    implementation 'com.pickth:commons:1.0.5'
+  // not use
+//  implementation "com.android.support:cardview-v7:$support_libs"
+//  implementation "com.android.support:customtabs:$support_libs"
 
-    // firebase
-    implementation "com.google.firebase:firebase-database:$firebase_version"
+  implementation 'com.pickth:commons:1.0.5'
 
-    // kotlin
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+  // firebase
+  implementation "com.google.firebase:firebase-database:$firebase_version"
+  implementation "com.google.firebase:firebase-auth:$firebase_version"
 
-    // Anko
-    implementation "org.jetbrains.anko:anko-commons:$anko_version"
-    implementation "org.jetbrains.anko:anko-sdk25:$anko_version"
+  // kotlin
+  implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
-    // glide
-    implementation ("com.github.bumptech.glide:glide:4.5.0") {
-        exclude group: "com.android.support"
-    }
+  // Anko
+  implementation "org.jetbrains.anko:anko-commons:$anko_version"
+  implementation "org.jetbrains.anko:anko-sdk25:$anko_version"
 
-    implementation 'com.pickth:imageslider:1.0.1'
+  // glide
+  implementation("com.github.bumptech.glide:glide:4.5.0") {
+    exclude group: "com.android.support"
+  }
+
+  // gson
+  implementation 'com.google.code.gson:gson:2.8.1'
+
+  // ui
+  implementation 'com.pickth:imageslider:1.0.1'
+  implementation 'com.rengwuxian.materialedittext:library:2.1.4'
+
 }
 
 repositories {
-    mavenCentral()
+  mavenCentral()
 }
