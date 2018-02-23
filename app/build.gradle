@@ -52,6 +52,7 @@ dependencies {
   // firebase
   implementation "com.google.firebase:firebase-database:$firebase_version"
   implementation "com.google.firebase:firebase-auth:$firebase_version"
+  implementation "com.google.firebase:firebase-storage:$firebase_version"
 
   // kotlin
   implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
@@ -71,7 +72,6 @@ dependencies {
   // ui
   implementation 'com.pickth:imageslider:1.0.1'
   implementation 'com.rengwuxian.materialedittext:library:2.1.4'
-
 }
 
 repositories {

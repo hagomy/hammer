@@ -136,7 +136,8 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
       setItemViewId(R.layout.item_category)
       setCategoryListener(object : CategoryListener {
         override fun onClickItem(categoryPosition: Int, itemPosition: Int) {
-          toast("${mCategoryCodes[categoryPosition][itemPosition]}을 누르셨습니다")
+//          toast("${mCategoryCodes[categoryPosition][itemPosition]}을 누르셨습니다")
+          startActivity<WriteGoodsActivity>()
         }
       }
       )

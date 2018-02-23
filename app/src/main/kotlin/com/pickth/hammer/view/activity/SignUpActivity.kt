@@ -22,6 +22,7 @@ import android.util.Log
 import android.view.MenuItem
 import com.google.firebase.auth.FirebaseAuth
 import com.pickth.hammer.R
+import com.pickth.hammer.item.User
 import com.pickth.hammer.util.UserInfoManager
 import kotlinx.android.synthetic.main.activity_signup.et_signup_email
 import kotlinx.android.synthetic.main.activity_signup.et_signup_password
@@ -95,6 +96,11 @@ class SignUpActivity : AppCompatActivity() {
         if(!it.isSuccessful) {
           Log.d(TAG, "createUserWithEmailAndPassword: ${it.exception}")
           Log.d(TAG, "add user not successful " + it.isSuccessful);
+        } else {
+          if(it.isSuccessful) {
+            val user = UserInfoManager.setUser(this, User(it.result.user.uid, email))
+            startToMainActivity()
+          }
         }
       }
     }

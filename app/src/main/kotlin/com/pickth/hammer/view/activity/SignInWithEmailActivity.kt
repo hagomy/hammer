@@ -17,12 +17,15 @@
 package com.pickth.hammer.view.activity
 
 import android.os.Bundle
+import android.os.UserManager
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.MenuItem
 import com.google.firebase.auth.FirebaseAuth
 import com.pickth.commons.extensions.hideKeyboard
 import com.pickth.hammer.R
+import com.pickth.hammer.item.User
+import com.pickth.hammer.util.UserInfoManager
 import kotlinx.android.synthetic.main.activity_signup.et_signup_email
 import kotlinx.android.synthetic.main.activity_signup.et_signup_password
 import kotlinx.android.synthetic.main.activity_signup.signup_toolbar
@@ -30,6 +33,7 @@ import kotlinx.android.synthetic.main.activity_signup.tv_signup_submit
 import kotlinx.android.synthetic.main.activity_signup.tv_signup_title
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
+import org.jetbrains.anko.userManager
 
 /**
  * Created by yonghoon on 2018-02-22
@@ -83,10 +87,13 @@ class SignInWithEmailActivity: AppCompatActivity() {
               Log.d(TAG, "signInWithEmailAndPassword, : ${it.exception}")
               toast("유효하지 않은 정보입니다.")
             } else {
+              val uid = it.result.user.uid
               it.result.user.getIdToken(true)
                   .addOnCompleteListener {
                     val token = it.result.token
                     Log.d(TAG, "user token: $token")
+                    UserInfoManager.firebaseUserToken = token.toString()
+                    UserInfoManager.setUser(this,User(uid, email))
                     startToMainActivity()
                   }
 

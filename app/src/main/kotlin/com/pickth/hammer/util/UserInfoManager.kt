@@ -20,6 +20,7 @@ import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.pickth.hammer.item.User
 
 /**
  * Created by yonghoon on 2018-02-22
@@ -64,6 +65,4 @@ object UserInfoManager {
         .putString("user", Gson().toJson(mUser).toString())
         .apply()
   }
-
-  data class User(var uid: String)
 }

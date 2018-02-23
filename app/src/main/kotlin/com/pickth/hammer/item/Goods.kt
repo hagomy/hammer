@@ -21,4 +21,18 @@ package com.pickth.hammer.item
  * Blog   : http://blog.pickth.com
  */
 
-data class Goods(var name: String, var explanation: String, var price: Int, var isHot: Boolean = false, var user: User, var images: ArrayList<Int> = ArrayList())
+data class Goods(var id: String, var name: String, var explanation: String, var price: Int, var isHot: Boolean = false, var user: User, var images: ArrayList<Int> = ArrayList()) {
+  fun toMap(): HashMap<String, Any> {
+    val result = HashMap<String, Any>().apply {
+      put("id", id)
+      put("name", name)
+      put("explanation", explanation)
+      put("price", price)
+      put("isHot", isHot)
+      put("user", user)
+      put("images", images)
+    }
+
+    return result
+  }
+}

@@ -35,7 +35,7 @@ class HomeItemViewHolder(view: View, val itemTouchListener: ItemTouchListener) :
       tv_home_goods_title.text = item.name
       tv_home_goods_explanation.text = item.explanation
       tv_home_item_price.text = "${item.price} 원"
-      tv_home_goods_seller_nickname.text = item.user.nickname
+      tv_home_goods_seller_nickname.text = item.user.email
       if(item.isHot) iv_home_goods_is_hot.beVisible()
 
       Glide.with(context).load(item.images[0]).into(iv_home_goods_img)

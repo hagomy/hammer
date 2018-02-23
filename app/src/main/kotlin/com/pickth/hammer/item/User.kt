@@ -21,4 +21,13 @@ package com.pickth.hammer.item
  * Blog   : http://blog.pickth.com
  */
 
-data class User(var nickname: String)
+data class User(val uid: String, val email: String) {
+  fun toMap(): Map<String, Any> {
+    val result = HashMap<String, Any>()
+
+    result.put("uid", uid)
+    result.put("email", email)
+
+    return result
+  }
+}
