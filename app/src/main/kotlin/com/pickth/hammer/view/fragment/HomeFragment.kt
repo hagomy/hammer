@@ -28,6 +28,7 @@ import com.pickth.hammer.item.Goods
 import com.pickth.hammer.item.User
 import com.pickth.hammer.listener.ItemTouchListener
 import com.pickth.hammer.view.activity.DetailActivity
+import com.pickth.imageslider.listener.OnImageTouchListener
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import org.jetbrains.anko.startActivity
 import java.util.UUID
@@ -61,6 +62,27 @@ class HomeFragment : Fragment(), ItemTouchListener {
     rootView.rv_home.apply {
       adapter = mAdapter
       layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+    }
+
+    val items = ArrayList<Int>().apply {
+      add(R.drawable.e_0)
+      add(R.drawable.e_0)
+      add(R.drawable.e_0)
+      add(R.drawable.e_0)
+    }
+
+    rootView.imageslider_home_event.run {
+      setOnImageTouchListener(object: OnImageTouchListener {
+        override fun onClickListener(position: Int) {
+
+        }
+
+        override fun onLongClickListener(position: Int) {
+        }
+
+      })
+
+      imageslider_home_event.addItems(items)
     }
 
     addItem()

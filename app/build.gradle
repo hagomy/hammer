@@ -70,7 +70,7 @@ dependencies {
   implementation 'com.google.code.gson:gson:2.8.1'
 
   // ui
-  implementation 'com.pickth:imageslider:1.0.1'
+  implementation 'com.pickth:imageslider:1.0.12'
   implementation 'com.rengwuxian.materialedittext:library:2.1.4'
 }
 
