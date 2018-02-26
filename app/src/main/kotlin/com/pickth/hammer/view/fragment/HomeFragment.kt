@@ -23,10 +23,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.pickth.hammer.R
-import com.pickth.hammer.adapter.HomeItemAdapter
+import com.pickth.hammer.adapter.GoodsItemAdapter
 import com.pickth.hammer.item.Goods
 import com.pickth.hammer.item.User
-import com.pickth.hammer.listener.ItemTouchListener
+import com.pickth.hammer.listener.GoodsItemTouchListener
 import com.pickth.hammer.view.activity.DetailActivity
 import com.pickth.imageslider.listener.OnImageTouchListener
 import kotlinx.android.synthetic.main.fragment_home.view.*
@@ -38,9 +38,9 @@ import java.util.UUID
  * Blog   : http://blog.pickth.com
  */
 
-class HomeFragment : Fragment(), ItemTouchListener {
+class HomeFragment : Fragment(), GoodsItemTouchListener {
 
-  private lateinit var mAdapter: HomeItemAdapter
+  private lateinit var mAdapter: GoodsItemAdapter
 
   companion object {
     private val mInstance = HomeFragment()
@@ -55,7 +55,7 @@ class HomeFragment : Fragment(), ItemTouchListener {
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
     val rootView = inflater.inflate(R.layout.fragment_home, container, false)
 
-    mAdapter = HomeItemAdapter().apply {
+    mAdapter = GoodsItemAdapter().apply {
       setItemTouchListener(this@HomeFragment)
     }
 
@@ -92,48 +92,6 @@ class HomeFragment : Fragment(), ItemTouchListener {
   }
 
   fun addItem() {
-    // http://www.ikea.com/kr/ko/catalog/categories/departments/ikea_family_products/27821/
-    mAdapter.addItem(Goods(UUID.randomUUID().toString(), "FJARMA", "바깥쪽 주머니에 열쇠와 휴대폰 등을 넣어두면 보다 편리하게 사용할 수 있어요. 가방 아래쪽 칸에는 신발 등을 넣을 수 있습니다.", 39900, true, User("2","user"), ArrayList<Int>().apply {
-      add(R.drawable.a_0)
-      add(R.drawable.a_1)
-      add(R.drawable.a_2)
-      add(R.drawable.a_3)
-    }
-    )
-    )
-    mAdapter.addItem(Goods(UUID.randomUUID().toString(), "FJARMA", "바깥쪽 주머니에 열쇠와 휴대폰 등을 넣어두면 보다 편리하게 사용할 수 있어요. 가방 아래쪽 칸에는 신발 등을 넣을 수 있습니다.", 49900, false, User("2","user"), ArrayList<Int>().apply {
-      add(R.drawable.b_0)
-      add(R.drawable.b_1)
-      add(R.drawable.b_2)
-      add(R.drawable.b_3)
-    }
-    )
-    )
-    mAdapter.addItem(Goods(UUID.randomUUID().toString(), "KNALLA", "세탁물과 식료품, 재활용품까지 무엇이든 담을 수 있습니다. 지퍼식 제품으로 가방을 떨어뜨려도 내용물이 쏟아지지 않습니다.", 2900, false, User("2","user"), ArrayList<Int>().apply {
-      add(R.drawable.c_0)
-      add(R.drawable.c_1)
-    }
-    )
-    )
-    mAdapter.addItem(Goods(UUID.randomUUID().toString(), "FÖRENKLA", "바깥쪽 주머니에 열쇠와 휴대폰 등을 넣어두면 보다 편리하게 사용할 수 있어요. 슈트케이스의 손잡이에 쉽게 걸어둘 수 있어서 여행을 다닐 때 특히 더 편리합니다.", 29900, true, User("2","user"), ArrayList<Int>().apply {
-      add(R.drawable.d_0)
-      add(R.drawable.d_1)
-      add(R.drawable.d_2)
-      add(R.drawable.d_3)
-      add(R.drawable.d_4)
-    }
-    )
-    )
-    mAdapter.addItem(Goods(UUID.randomUUID().toString(), "FÖRENKLA", "바깥쪽 주머니에 열쇠와 휴대폰 등을 넣어두면 보다 편리하게 사용할 수 있어요. 슈트케이스의 손잡이에 쉽게 걸어둘 수 있어서 여행을 다닐 때 특히 더 편리합니다.", 29900, false, User("2","user"), ArrayList<Int>().apply {
-      add(R.drawable.e_0)
-      add(R.drawable.e_1)
-      add(R.drawable.e_2)
-      add(R.drawable.e_3)
-      add(R.drawable.e_4)
-      add(R.drawable.e_5)
-      add(R.drawable.e_6)
-    }
-    )
-    )
+
   }
 }

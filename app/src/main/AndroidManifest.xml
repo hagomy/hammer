@@ -28,6 +28,7 @@
     <activity android:name=".view.activity.SignUpActivity"/>
     <activity android:name=".view.activity.SignInWithEmailActivity"/>
     <activity android:name=".view.activity.WriteGoodsActivity"/>
+    <activity android:name=".view.activity.CategoryActivity"/>
   </application>
 
 </manifest>

@@ -18,6 +18,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.nav_view.*
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import com.pickth.hammer.util.UserInfoManager
 import org.jetbrains.anko.startActivity
@@ -84,13 +85,24 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
   }
 
   private fun getCategory() {
-    val myRef = mDatabase.getReference("category")
+    val myRef = mDatabase.reference
     myRef.addValueEventListener(object : ValueEventListener {
       override fun onDataChange(dataSnapshot: DataSnapshot) {
+        // init
         rv_category.clearCategory()
         mCategoryCodes.clear()
 
-        for(data: DataSnapshot in dataSnapshot.children) {
+
+        // name
+        val categoryTitles = ArrayList<String>()
+        for(name in dataSnapshot.child("category_code").children) {
+          categoryTitles.add(name.value as String)
+        }
+
+        var count = 0
+
+        // code
+        for(data: DataSnapshot in dataSnapshot.child("category").children) {
           val categories = ArrayList<String>()
           val categoryCodes = ArrayList<String>()
 
@@ -99,7 +111,7 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
             categoryCodes.add(item.key)
           }
 
-          rv_category.addCategory(data.key, categories)
+          rv_category.addCategory(categoryTitles[count++], categories)
           mCategoryCodes.add(categoryCodes)
         }
       }
@@ -137,7 +149,7 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
       setCategoryListener(object : CategoryListener {
         override fun onClickItem(categoryPosition: Int, itemPosition: Int) {
 //          toast("${mCategoryCodes[categoryPosition][itemPosition]}을 누르셨습니다")
-          startActivity<WriteGoodsActivity>()
+          startActivity<CategoryActivity>("code" to mCategoryCodes[categoryPosition][itemPosition])
         }
       }
       )

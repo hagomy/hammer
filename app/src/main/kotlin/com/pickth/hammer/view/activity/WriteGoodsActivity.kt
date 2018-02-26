@@ -8,13 +8,17 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import com.bumptech.glide.Glide
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.pickth.hammer.R
@@ -37,10 +41,11 @@ import java.util.UUID
 class WriteGoodsActivity : AppCompatActivity() {
   val TAG = javaClass.simpleName
 
+  private var mCategoryname = ""
+
   // database
   private lateinit var mDatabase: DatabaseReference
   private var mCategoryCode = "0"
-  private var mCategoryName = "beauty"
 
   // storage
   private lateinit var mFirebaseStorage: FirebaseStorage
@@ -62,7 +67,12 @@ class WriteGoodsActivity : AppCompatActivity() {
       setDisplayHomeAsUpEnabled(true)
     }
 
-    tv_write_goods_category_title.text = mCategoryName
+    intent.run {
+      mCategoryCode = getStringExtra("code")
+      mCategoryname = getStringExtra("name")
+    }
+
+    tv_write_goods_category_title.text = mCategoryname
 
     btn_write_goods_upload_image.setOnClickListener {
       checkPermission()

@@ -21,17 +21,17 @@ package com.pickth.hammer.item
  * Blog   : http://blog.pickth.com
  */
 
-data class Goods(var id: String, var name: String, var explanation: String, var price: Int, var isHot: Boolean = false, var user: User, var images: ArrayList<Int> = ArrayList()) {
+data class Goods(var id: String, var name: String, var explanation: String, var price: Int, var isHot: Boolean = false, var user: User, var images: ArrayList<String> = ArrayList()) {
+  constructor(id: String, name: String, explanation: String, price: Int, isHot: Boolean, user: User) :this(id, name, explanation, price, isHot, user, ArrayList())
   fun toMap(): HashMap<String, Any> {
-    val result = HashMap<String, Any>().apply {
-      put("id", id)
-      put("name", name)
-      put("explanation", explanation)
-      put("price", price)
-      put("isHot", isHot)
-      put("user", user)
-      put("images", images)
-    }
+    val result = HashMap<String, Any>()
+    result.put("id", id)
+    result.put("name", name)
+    result.put("explanation", explanation)
+    result.put("price", price)
+    result.put("isHot", isHot)
+    result.put("user", user)
+    result.put("images", images)
 
     return result
   }

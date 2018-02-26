@@ -21,6 +21,6 @@ package com.pickth.hammer.listener
  * Blog   : http://blog.pickth.com
  */
 
-interface ItemTouchListener {
+interface GoodsItemTouchListener {
     fun onClick(position: Int)
 }

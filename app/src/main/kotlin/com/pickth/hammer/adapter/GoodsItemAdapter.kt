@@ -21,8 +21,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.pickth.hammer.R
 import com.pickth.hammer.item.Goods
-import com.pickth.hammer.listener.ItemTouchListener
-import com.pickth.hammer.view.viewholder.HomeItemViewHolder
+import com.pickth.hammer.listener.GoodsItemTouchListener
+import com.pickth.hammer.view.viewholder.GoodsItemViewHolder
 import java.util.ArrayList
 
 /**
@@ -30,27 +30,26 @@ import java.util.ArrayList
  * Blog   : http://blog.pickth.com
  */
 
-class HomeItemAdapter : RecyclerView.Adapter<HomeItemViewHolder>() {
+class GoodsItemAdapter : RecyclerView.Adapter<GoodsItemViewHolder>() {
   private var arrItems = ArrayList<Goods>()
+  private lateinit var mGoodsItemTouchListener: GoodsItemTouchListener
 
-  override fun onBindViewHolder(holder: HomeItemViewHolder, position: Int) {
+  override fun onBindViewHolder(holder: GoodsItemViewHolder, position: Int) {
     holder.onBind(arrItems[position])
   }
 
-  private lateinit var mItemTouchListener: ItemTouchListener
-
-  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeItemViewHolder {
+  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GoodsItemViewHolder {
     val itemView = LayoutInflater
         .from(parent.context)
         .inflate(R.layout.item_goods, parent, false)
 
-    return HomeItemViewHolder(itemView, mItemTouchListener)
+    return GoodsItemViewHolder(itemView, mGoodsItemTouchListener)
   }
 
   override fun getItemCount(): Int = arrItems.size
 
-  fun setItemTouchListener(itemTouchListener: ItemTouchListener) {
-    mItemTouchListener = itemTouchListener
+  fun setItemTouchListener(goodsItemTouchListener: GoodsItemTouchListener) {
+    mGoodsItemTouchListener = goodsItemTouchListener
   }
 
   fun getItems(): ArrayList<Goods> = arrItems

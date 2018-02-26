@@ -20,8 +20,9 @@ import android.view.View
 import com.bumptech.glide.Glide
 import com.pickth.commons.extensions.beVisible
 import com.pickth.commons.recyclerview.BaseRecyclerView
+import com.pickth.hammer.R
 import com.pickth.hammer.item.Goods
-import com.pickth.hammer.listener.ItemTouchListener
+import com.pickth.hammer.listener.GoodsItemTouchListener
 import kotlinx.android.synthetic.main.item_goods.view.*
 
 /**
@@ -29,7 +30,7 @@ import kotlinx.android.synthetic.main.item_goods.view.*
  * Blog   : http://blog.pickth.com
  */
 
-class HomeItemViewHolder(view: View, val itemTouchListener: ItemTouchListener) : BaseRecyclerView.BaseViewHolder<Goods>(view) {
+class GoodsItemViewHolder(view: View, val goodsItemTouchListener: GoodsItemTouchListener) : BaseRecyclerView.BaseViewHolder<Goods>(view) {
   override fun onBind(item: Goods) {
     with(itemView) {
       tv_home_goods_title.text = item.name
@@ -38,10 +39,12 @@ class HomeItemViewHolder(view: View, val itemTouchListener: ItemTouchListener) :
       tv_home_goods_seller_nickname.text = item.user.email
       if(item.isHot) iv_home_goods_is_hot.beVisible()
 
+      if(item.images.size == 0) item.images.add("https://firebasestorage.googleapis.com/v0/b/hammer-9baf6.appspot.com/o/images%2Fgoods%2F7ebfda77-005b-40ea-97ba-4abcc5d6af2e?alt=media&token=c8350e6e-89a8-455f-b5c3-ef3f5b9dd57b")
+
       Glide.with(context).load(item.images[0]).into(iv_home_goods_img)
 
       setOnClickListener {
-        itemTouchListener.onClick(0)
+        goodsItemTouchListener.onClick(0)
       }
     }
   }
