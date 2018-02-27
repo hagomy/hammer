@@ -1,40 +1,40 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext {
-        propCompileSdkVersion = 27
-        propMinSdkVersion = 19
-        propTargetSdkVersion = propCompileSdkVersion
-        propVersionCode = 1
-        propVersionName = '1.0.0'
+  ext {
+    propCompileSdkVersion = 27
+    propMinSdkVersion = 19
+    propTargetSdkVersion = propCompileSdkVersion
+    propVersionCode = 1
+    propVersionName = '1.0.0'
 
-        kotlin_version = '1.1.51'
-        support_libs = '27.0.2'
-        anko_version = '0.10.1'
-        firebase_version = '11.4.2'
-    }
-    repositories {
-        google()
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.google.gms:google-services:3.2.0'
+    versions = ['kotlin'        : '1.1.51',
+                'supportLibrary': '27.0.2',
+                'anko'          : '0.10.1',
+                'firebase'      : '11.4.2']
+  }
+  repositories {
+    google()
+    jcenter()
+  }
+  dependencies {
+    classpath 'com.android.tools.build:gradle:3.0.1'
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
+    classpath 'com.google.gms:google-services:3.2.0'
 
 
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-    }
+    // NOTE: Do not place your application dependencies here; they belong
+    // in the individual module build.gradle files
+  }
 }
 
 allprojects {
-    repositories {
-        google()
-        jcenter()
-    }
+  repositories {
+    google()
+    jcenter()
+  }
 }
 
 task clean(type: Delete) {
-    delete rootProject.buildDir
+  delete rootProject.buildDir
 }

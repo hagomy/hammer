@@ -37,29 +37,25 @@ dependencies {
   implementation fileTree(dir: 'libs', include: ['*.jar'])
 
   // support
-  implementation "com.android.support:appcompat-v7:$support_libs"
-  implementation "com.android.support:design:$support_libs"
-  implementation "com.android.support:recyclerview-v7:$support_libs"
-  implementation "com.android.support:support-vector-drawable:$support_libs"
+  implementation "com.android.support:appcompat-v7:${versions.supportLibrary}"
+  implementation "com.android.support:design:${versions.supportLibrary}"
+  implementation "com.android.support:recyclerview-v7:${versions.supportLibrary}"
+  implementation "com.android.support:support-vector-drawable:${versions.supportLibrary}"
   implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-
-  // not use
-//  implementation "com.android.support:cardview-v7:$support_libs"
-//  implementation "com.android.support:customtabs:$support_libs"
 
   implementation 'com.pickth:commons:1.0.5'
 
   // firebase
-  implementation "com.google.firebase:firebase-database:$firebase_version"
-  implementation "com.google.firebase:firebase-auth:$firebase_version"
-  implementation "com.google.firebase:firebase-storage:$firebase_version"
+  implementation "com.google.firebase:firebase-database:${versions.firebase}"
+  implementation "com.google.firebase:firebase-auth:${versions.firebase}"
+  implementation "com.google.firebase:firebase-storage:${versions.firebase}"
 
   // kotlin
-  implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+  implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:${versions.kotlin}"
 
   // Anko
-  implementation "org.jetbrains.anko:anko-commons:$anko_version"
-  implementation "org.jetbrains.anko:anko-sdk25:$anko_version"
+  implementation "org.jetbrains.anko:anko-commons:${versions.anko}"
+  implementation "org.jetbrains.anko:anko-sdk25:${versions.anko}"
 
   // glide
   implementation("com.github.bumptech.glide:glide:4.5.0") {
