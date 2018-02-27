@@ -19,8 +19,16 @@ package com.pickth.hammer.view.activity
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.pickth.hammer.R
+import com.pickth.hammer.extensions.getGoods
+import com.pickth.hammer.item.Goods
 import kotlinx.android.synthetic.main.activity_detail.*
+import org.jetbrains.anko.toast
 
 /**
  * Created by yonghoon on 2018-01-29
@@ -28,6 +36,11 @@ import kotlinx.android.synthetic.main.activity_detail.*
  */
 
 class DetailActivity : AppCompatActivity() {
+
+  val TAG = javaClass.simpleName
+  private var mId = ""
+  private var mCategoryCode = ""
+  private lateinit var mGoodsInfoReference: DatabaseReference
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -43,6 +56,11 @@ class DetailActivity : AppCompatActivity() {
       setDisplayHomeAsUpEnabled(true)
     }
 
+    mId = intent.getStringExtra("id")
+    mCategoryCode = intent.getStringExtra("code")
+
+    getGoodsInfo(mId)
+
     is_detail.addItems(
         ArrayList<Int>().apply {
           add(R.drawable.e_0)
@@ -54,6 +72,34 @@ class DetailActivity : AppCompatActivity() {
           add(R.drawable.e_6)
         }
     )
+  }
+
+  private fun getGoodsInfo(id: String) {
+    mGoodsInfoReference = FirebaseDatabase.getInstance()
+        .reference
+        .child("goods")
+        .child(mCategoryCode)
+        .child(id)
+
+    mGoodsInfoReference.addListenerForSingleValueEvent(object : ValueEventListener {
+      override fun onDataChange(p0: DataSnapshot?) {
+        bindGoodsInfo(p0?.getGoods())
+      }
+
+      override fun onCancelled(p0: DatabaseError?) {
+      }
+
+    })
+  }
+
+  private fun bindGoodsInfo(goods: Goods?) {
+    if(goods == null) {
+      toast("잘못된 상품입니다.")
+      return
+    }
+
+    tv_detail_goods_name.text = goods.name
+    tv_detail_goods_price.text = goods.price.toString()
   }
 
   override fun onOptionsItemSelected(item: MenuItem?): Boolean {

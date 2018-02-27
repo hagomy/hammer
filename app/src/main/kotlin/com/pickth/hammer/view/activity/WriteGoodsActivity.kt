@@ -54,7 +54,6 @@ class WriteGoodsActivity : AppCompatActivity() {
   private val PERMISSIONS_READ_STORAGE = 0
   private var imageUrl: Uri? = null
 
-
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_write_goods)
@@ -85,15 +84,11 @@ class WriteGoodsActivity : AppCompatActivity() {
       mStorageRef = mFirebaseStorage.reference
 
       // 마지막 child가 파일 이름이 됨
-      mStorageRef.child("images")
-          .child("goods")
-          .child(goodsId)
-          .putFile(image)
-          .addOnSuccessListener {
-            if(it.task.isSuccessful) {
+      mStorageRef.child("images").child("goods").child(goodsId).putFile(image).addOnSuccessListener {
+        if(it.task.isSuccessful) {
 
-            }
-          }
+        }
+      }
     }
   }
 
@@ -118,15 +113,13 @@ class WriteGoodsActivity : AppCompatActivity() {
   }
 
   private fun checkPermission() {
-    ActivityCompat.requestPermissions(this,
-        Array(1, { android.Manifest.permission.READ_EXTERNAL_STORAGE }),
-        PERMISSIONS_READ_STORAGE)
+    ActivityCompat.requestPermissions(this, Array(1, { android.Manifest.permission.READ_EXTERNAL_STORAGE }), PERMISSIONS_READ_STORAGE)
   }
 
   override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
     super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-    when(requestCode) {
+    when (requestCode) {
       PERMISSIONS_READ_STORAGE -> {
         if(grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
           // permission ok
@@ -141,14 +134,12 @@ class WriteGoodsActivity : AppCompatActivity() {
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
 
-    when(requestCode) {
+    when (requestCode) {
       GALLERY_CODE -> {
         if(resultCode == Activity.RESULT_OK) {
           imageUrl = data?.data
 
-          Glide.with(this)
-              .load(imageUrl)
-              .into(iv_write_goods_image)
+          Glide.with(this).load(imageUrl).into(iv_write_goods_image)
         }
       }
     }
@@ -156,7 +147,9 @@ class WriteGoodsActivity : AppCompatActivity() {
 
   override fun onOptionsItemSelected(item: MenuItem?): Boolean {
     when (item?.itemId) {
-      android.R.id.home -> { finish() }
+      android.R.id.home -> {
+        finish()
+      }
 
       R.id.menu_check -> {
         // post server
@@ -191,13 +184,7 @@ class WriteGoodsActivity : AppCompatActivity() {
 
         uploadImage(goodsId, imageUrl)
 
-        val goods = Goods(goodsId,
-            name,
-            explanation,
-            price,
-            false,
-            user
-        )
+        val goods = Goods(goodsId, name, explanation, price, false, user, mCategoryCode)
 
         postGoods(mCategoryCode, goods)
       }

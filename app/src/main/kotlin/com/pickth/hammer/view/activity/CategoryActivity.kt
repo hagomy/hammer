@@ -28,15 +28,14 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.pickth.hammer.R
 import com.pickth.hammer.adapter.GoodsItemAdapter
-import com.pickth.hammer.item.Goods
-import com.pickth.hammer.item.User
+import com.pickth.hammer.extensions.getCategoryName
+import com.pickth.hammer.extensions.getGoods
 import com.pickth.hammer.listener.GoodsItemTouchListener
 import kotlinx.android.synthetic.main.activity_category.fab
 import kotlinx.android.synthetic.main.activity_category.recyclerview_category
 import kotlinx.android.synthetic.main.activity_category.toolbar_category
-import kotlinx.android.synthetic.main.activity_detail.detail_toolbar
-import kotlinx.android.synthetic.main.activity_write_goods.tv_write_goods_category_title
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.toast
 import java.util.ArrayList
 
 /**
@@ -71,9 +70,18 @@ class CategoryActivity: AppCompatActivity() {
     mCategoryReference.addListenerForSingleValueEvent(object: ValueEventListener {
       override fun onDataChange(p0: DataSnapshot?) {
         Log.e(TAG, p0?.value.toString())
+        if(p0 == null) {
+          toast("잘못된 접근입니다.")
+          finish()
+          return
+        }
+        mCategoryName = p0.getCategoryName(mCategoryCode)
 
-        val items = p0?.value as ArrayList<String>
-        mCategoryName = items[mCategoryCode.toInt()%100]
+        if(mCategoryName == "") {
+          toast("잘못된 접근입니다.")
+          finish()
+          return
+        }
       }
       override fun onCancelled(p0: DatabaseError?) {
       }
@@ -94,7 +102,7 @@ class CategoryActivity: AppCompatActivity() {
     mGoodsItemAdapter = GoodsItemAdapter().apply {
       setItemTouchListener(object : GoodsItemTouchListener {
         override fun onClick(position: Int) {
-
+          startActivity<DetailActivity>("id" to mGoodsItemAdapter.getItem(position).id, "code" to mCategoryCode)
         }
 
       })
@@ -128,41 +136,7 @@ class CategoryActivity: AppCompatActivity() {
 //        val goods = p0?.getValue(ArrayList<Any>::javaClass)
         if(p0 != null) {
           for(itemSnapshot in p0.children) {
-            itemSnapshot.let {
-              val id = it.child("id").value as String
-              val name = it.child("name").value as String
-              val explanation = it.child("explanation").value as String
-              val price = it.child("price").value as Long
-              val isHot = it.child("isHot").value as Boolean
-              val userMap = it.child("user").value as HashMap<String, String>
-              val images = it.child("images").value as ArrayList<String>?
-
-              val user = User(userMap["uid"]!!, userMap["email"]!!)
-
-              val goods: Goods
-
-              if(images != null) {
-                goods = Goods(id, name, explanation, price.toInt(), isHot, user, images)
-              } else {
-                goods = Goods(id, name, explanation, price.toInt(), isHot, user)
-              }
-              mGoodsItemAdapter.addItem(goods)
-            }
-//            Log.e(TAG, itemSnapshot.value.toString())
-//            itemSnapshot.getValue(Goods::class.java)
-//            {
-//              Log.e(TAG, it.toString())
-//              val item = it.getValue(Goods::class.java)
-//              if(item != null) {
-//                mGoodsItemAdapter.addItem(item)
-//              }
-//            }
-//            Log.e(TAG, itemSnapshot.children.toString())
-//            val goods = itemSnapshot.children.iterator().next().getValue(Goods::class.java)
-////            val goods = itemSnapshot.getValue(Goods::class.java)
-//            if(goods != null) {
-//              mGoodsItemAdapter.addItem(goods)
-//            }
+            itemSnapshot.getGoods()?.let { mGoodsItemAdapter.addItem(it) }
           }
           mGoodsItemAdapter.notifyDataSetChanged()
         }
