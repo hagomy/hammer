@@ -16,6 +16,7 @@
 
 package com.pickth.hammer.extensions
 
+import android.util.Log
 import com.google.firebase.database.DataSnapshot
 import com.pickth.hammer.item.Goods
 import com.pickth.hammer.item.User
@@ -62,7 +63,12 @@ fun DataSnapshot.getGoods(): Goods? {
  */
 fun DataSnapshot.getCategoryName(categoryCode: String): String {
   return try {
-    (value as ArrayList<String>)[categoryCode.toInt()%100]
+    if(value is ArrayList<*>) {
+      (value as ArrayList<String>)[categoryCode.toInt()%100]
+    } else {
+      (value as HashMap<String, String>)[categoryCode]?:""
+    }
+
   } catch (e: Exception) {
     e.printStackTrace()
     ""

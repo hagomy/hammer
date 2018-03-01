@@ -69,7 +69,7 @@ class CategoryActivity: AppCompatActivity() {
           return
         }
         mCategoryName = p0.getCategoryName(mCategoryCode)
-
+        Log.e(TAG, "category code: ${mCategoryCode}, category name : ${mCategoryName}")
         if(mCategoryName == "") {
           toast("잘못된 접근입니다.")
           finish()
