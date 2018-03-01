@@ -16,15 +16,10 @@
 
 package com.pickth.hammer.view.activity
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
-import com.google.firebase.auth.FirebaseAuth
 import com.pickth.hammer.R
-import com.pickth.hammer.util.UserInfoManager
-import kotlinx.android.synthetic.main.activity_signin.fl_login_with_email
-import kotlinx.android.synthetic.main.activity_signin.tv_signup
+import kotlinx.android.synthetic.main.activity_signin.*
 import org.jetbrains.anko.startActivity
 
 /**
@@ -32,7 +27,7 @@ import org.jetbrains.anko.startActivity
  * Blog   : http://blog.pickth.com
  */
 
-class SignInActivity: AppCompatActivity() {
+class SignInActivity : AppCompatActivity() {
 
   val TAG = javaClass.simpleName
 //  private lateinit var mAuth: FirebaseAuth

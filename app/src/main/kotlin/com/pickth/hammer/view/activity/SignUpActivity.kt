@@ -24,10 +24,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.pickth.hammer.R
 import com.pickth.hammer.item.User
 import com.pickth.hammer.util.UserInfoManager
-import kotlinx.android.synthetic.main.activity_signup.et_signup_email
-import kotlinx.android.synthetic.main.activity_signup.et_signup_password
-import kotlinx.android.synthetic.main.activity_signup.signup_toolbar
-import kotlinx.android.synthetic.main.activity_signup.tv_signup_submit
+import kotlinx.android.synthetic.main.activity_signup.*
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 

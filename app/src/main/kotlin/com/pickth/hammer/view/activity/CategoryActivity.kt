@@ -21,22 +21,15 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.MenuItem
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.pickth.hammer.R
 import com.pickth.hammer.adapter.GoodsItemAdapter
 import com.pickth.hammer.extensions.getCategoryName
 import com.pickth.hammer.extensions.getGoods
 import com.pickth.hammer.listener.GoodsItemTouchListener
-import kotlinx.android.synthetic.main.activity_category.fab
-import kotlinx.android.synthetic.main.activity_category.recyclerview_category
-import kotlinx.android.synthetic.main.activity_category.toolbar_category
+import kotlinx.android.synthetic.main.activity_category.*
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
-import java.util.ArrayList
 
 /**
  * Created by yonghoon on 2018-02-26
