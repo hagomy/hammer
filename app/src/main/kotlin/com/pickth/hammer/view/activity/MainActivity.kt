@@ -9,20 +9,18 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.MenuItem
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.pickth.hammer.R
 import com.pickth.hammer.adapter.MainPagerAdapter
 import com.pickth.hammer.listener.CategoryListener
+import com.pickth.hammer.util.UserInfoManager
 import com.pickth.hammer.view.custom.MyBottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.nav_view.*
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ValueEventListener
-import com.pickth.hammer.util.UserInfoManager
 import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.toast
 
 class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
   val TAG = javaClass.simpleName

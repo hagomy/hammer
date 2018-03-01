@@ -17,12 +17,10 @@
 package com.pickth.hammer.view.activity
 
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.pickth.commons.view.activitys.BaseActivity
 import com.pickth.hammer.util.UserInfoManager
-import com.pickth.hammer.view.activity.MainActivity
 import org.jetbrains.anko.startActivity
 
 /**

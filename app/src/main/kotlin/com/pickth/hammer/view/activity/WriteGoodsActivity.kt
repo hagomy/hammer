@@ -11,28 +11,18 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import com.bumptech.glide.Glide
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.pickth.hammer.R
 import com.pickth.hammer.item.Goods
 import com.pickth.hammer.util.UserInfoManager
-import kotlinx.android.synthetic.main.activity_write_goods.btn_write_goods_upload_image
-import kotlinx.android.synthetic.main.activity_write_goods.et_write_goods_explanation
-import kotlinx.android.synthetic.main.activity_write_goods.et_write_goods_name
-import kotlinx.android.synthetic.main.activity_write_goods.et_write_goods_price
-import kotlinx.android.synthetic.main.activity_write_goods.iv_write_goods_image
-import kotlinx.android.synthetic.main.activity_write_goods.tb_write_goods
-import kotlinx.android.synthetic.main.activity_write_goods.tv_write_goods_category_title
+import kotlinx.android.synthetic.main.activity_write_goods.*
 import org.jetbrains.anko.toast
 import java.util.UUID
+import kotlin.collections.HashMap
 
 /**
  * Created by yonghoon on 2018-02-23
@@ -75,6 +65,7 @@ class WriteGoodsActivity : AppCompatActivity() {
 
     btn_write_goods_upload_image.setOnClickListener {
       checkPermission()
+      checkPermission()
     }
   }
 
@@ -84,9 +75,9 @@ class WriteGoodsActivity : AppCompatActivity() {
       mStorageRef = mFirebaseStorage.reference
 
       // 마지막 child가 파일 이름이 됨
-      mStorageRef.child("images").child("goods").child(goodsId).putFile(image).addOnSuccessListener {
+      mStorageRef.child("images").child("goods").child(goodsId).child("0").putFile(image).addOnSuccessListener {
         if(it.task.isSuccessful) {
-
+          Log.d(TAG, "download image url = ${it.downloadUrl}")
         }
       }
     }

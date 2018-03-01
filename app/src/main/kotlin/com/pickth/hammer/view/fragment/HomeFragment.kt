@@ -24,14 +24,11 @@ import android.view.View
 import android.view.ViewGroup
 import com.pickth.hammer.R
 import com.pickth.hammer.adapter.GoodsItemAdapter
-import com.pickth.hammer.item.Goods
-import com.pickth.hammer.item.User
 import com.pickth.hammer.listener.GoodsItemTouchListener
 import com.pickth.hammer.view.activity.DetailActivity
 import com.pickth.imageslider.listener.OnImageTouchListener
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import org.jetbrains.anko.startActivity
-import java.util.UUID
 
 /**
  * Created by yonghoon on 2018-01-09
