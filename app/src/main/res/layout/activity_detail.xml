@@ -20,7 +20,18 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorWhite"
         android:minHeight="?attr/actionBarSize"
-        />
+        >
+      <TextView
+          android:id="@+id/tv_detail_goods_title"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:clickable="false"
+          android:focusable="false"
+          android:longClickable="false"
+          android:textColor="@color/colorPrimary"
+          />
+    </android.support.v7.widget.Toolbar>
   </android.support.design.widget.AppBarLayout>
 
   <com.pickth.imageslider.view.ImageSlider

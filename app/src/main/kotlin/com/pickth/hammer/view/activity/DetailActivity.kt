@@ -52,7 +52,7 @@ class DetailActivity : AppCompatActivity() {
       setDisplayShowTitleEnabled(false)
 
       // icon
-      setHomeAsUpIndicator(R.drawable.ic_back)
+      setHomeAsUpIndicator(R.drawable.ic_back_primary)
       setDisplayHomeAsUpEnabled(true)
     }
 
@@ -99,6 +99,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     tv_detail_goods_name.text = goods.name
+    tv_detail_goods_title.text = goods.name
     tv_detail_goods_price.text = goods.price.toString()
   }
 

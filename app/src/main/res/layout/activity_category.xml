@@ -1,39 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
   <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
       android:orientation="vertical"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      >
-  <android.support.design.widget.AppBarLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
       >
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar_category"
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:minHeight="?attr/actionBarSize"
-        />
-  </android.support.design.widget.AppBarLayout>
+        android:layout_height="wrap_content"
+        >
 
-  <android.support.v7.widget.RecyclerView
-      android:id="@+id/recyclerview_category"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      />
+      <android.support.v7.widget.Toolbar
+          android:id="@+id/toolbar_category"
+          android:layout_width="match_parent"
+          android:layout_height="?attr/actionBarSize"
+          android:minHeight="?attr/actionBarSize"
+          >
+
+        <TextView
+            android:id="@+id/tv_category_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:clickable="false"
+            android:focusable="false"
+            android:longClickable="false"
+            android:textColor="@color/colorWhite"
+            />
+      </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:id="@+id/linear_not_exist_item"
+        android:gravity="center"
+        android:visibility="gone"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+    <TextView
+        android:text="상품이 아직 없어요"
+        android:textColor="@color/colorPrimary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+    </LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview_category"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
   </LinearLayout>
+
   <android.support.design.widget.FloatingActionButton
       android:id="@+id/fab"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_gravity="bottom|end"
       android:layout_margin="26dp"
-      app:srcCompat="@android:drawable/ic_input_add" />
+      app:srcCompat="@android:drawable/ic_input_add"
+      />
 </FrameLayout>

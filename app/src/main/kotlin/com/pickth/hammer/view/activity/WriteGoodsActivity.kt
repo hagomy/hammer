@@ -51,7 +51,7 @@ class WriteGoodsActivity : AppCompatActivity() {
     // actionbar
     setSupportActionBar(tb_write_goods)
     supportActionBar?.run {
-      setHomeAsUpIndicator(R.drawable.ic_back)
+      setHomeAsUpIndicator(R.drawable.ic_back_primary)
       setDisplayShowTitleEnabled(false)
       setDisplayHomeAsUpEnabled(true)
     }
@@ -59,6 +59,8 @@ class WriteGoodsActivity : AppCompatActivity() {
     intent.run {
       mCategoryCode = getStringExtra("code")
       mCategoryname = getStringExtra("name")
+
+      setResult(Activity.RESULT_CANCELED)
     }
 
     tv_write_goods_category_title.text = mCategoryname
@@ -100,6 +102,7 @@ class WriteGoodsActivity : AppCompatActivity() {
     childUpdates.put("/goods/latest/${goods.id}", goods.toMap())
     mDatabase.updateChildren(childUpdates)
 
+    setResult(Activity.RESULT_OK)
     toast("등록되었습니다.")
     finish()
   }
