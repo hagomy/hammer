@@ -21,7 +21,7 @@ import com.pickth.hammer.item.Goods
 import com.pickth.hammer.util.UserInfoManager
 import kotlinx.android.synthetic.main.activity_write_goods.*
 import org.jetbrains.anko.toast
-import java.util.UUID
+import java.util.*
 import kotlin.collections.HashMap
 
 /**
@@ -51,7 +51,7 @@ class WriteGoodsActivity : AppCompatActivity() {
     // actionbar
     setSupportActionBar(tb_write_goods)
     supportActionBar?.run {
-      setHomeAsUpIndicator(R.drawable.ic_back)
+      setHomeAsUpIndicator(R.drawable.ic_back_primary)
       setDisplayShowTitleEnabled(false)
       setDisplayHomeAsUpEnabled(true)
     }
@@ -59,6 +59,8 @@ class WriteGoodsActivity : AppCompatActivity() {
     intent.run {
       mCategoryCode = getStringExtra("code")
       mCategoryname = getStringExtra("name")
+
+      setResult(Activity.RESULT_CANCELED)
     }
 
     tv_write_goods_category_title.text = mCategoryname
@@ -97,8 +99,10 @@ class WriteGoodsActivity : AppCompatActivity() {
 
     val childUpdates = HashMap<String, Any>()
     childUpdates.put("/goods/$categoryCode/${goods.id}", goods.toMap())
+    childUpdates.put("/goods/latest/${goods.id}", goods.toMap())
     mDatabase.updateChildren(childUpdates)
 
+    setResult(Activity.RESULT_OK)
     toast("등록되었습니다.")
     finish()
   }
@@ -175,7 +179,8 @@ class WriteGoodsActivity : AppCompatActivity() {
 
         uploadImage(goodsId, imageUrl)
 
-        val goods = Goods(goodsId, name, explanation, price, false, user, mCategoryCode)
+        val date = System.currentTimeMillis().toString()
+        val goods = Goods(goodsId, name, explanation, price, false, user, mCategoryCode, date)
 
         postGoods(mCategoryCode, goods)
       }

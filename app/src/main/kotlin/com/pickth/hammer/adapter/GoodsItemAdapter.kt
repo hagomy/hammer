@@ -60,7 +60,11 @@ class GoodsItemAdapter : RecyclerView.Adapter<GoodsItemViewHolder>() {
     arrItems.add(item)
   }
 
-  fun addItemAtLast(item: Goods) {
-    arrItems.add(itemCount, item)
+  fun addItemAtFirst(item: Goods) {
+    arrItems.add(0, item)
+  }
+
+  fun clearItems() {
+    arrItems.clear()
   }
 }

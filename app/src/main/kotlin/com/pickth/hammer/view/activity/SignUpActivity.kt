@@ -46,7 +46,7 @@ class SignUpActivity : AppCompatActivity() {
     // actionbar
     setSupportActionBar(signup_toolbar)
     supportActionBar?.run {
-      setHomeAsUpIndicator(R.drawable.ic_back)
+      setHomeAsUpIndicator(R.drawable.ic_back_primary)
       setDisplayShowTitleEnabled(false)
       setDisplayHomeAsUpEnabled(true)
     }

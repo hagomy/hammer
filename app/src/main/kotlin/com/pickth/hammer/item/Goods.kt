@@ -23,8 +23,7 @@ import com.google.firebase.database.DataSnapshot
  * Blog   : http://blog.pickth.com
  */
 
-data class Goods(var id: String, var name: String, var explanation: String, var price: Int, var isHot: Boolean = false, var user: User, var category: String, var images: ArrayList<String> = ArrayList()) {
-  constructor(id: String, name: String, explanation: String, price: Int, isHot: Boolean, category: String, user: User) : this(id, name, explanation, price, isHot, user, category, ArrayList())
+data class Goods(var id: String, var name: String, var explanation: String, var price: Int, var isHot: Boolean = false, var user: User, var category: String, val regDate: String, var images: ArrayList<String> = ArrayList()) {
 
   fun toMap(): HashMap<String, Any> {
     val result = HashMap<String, Any>()
@@ -35,6 +34,7 @@ data class Goods(var id: String, var name: String, var explanation: String, var 
     result.put("isHot", isHot)
     result.put("user", user)
     result.put("category", category)
+    result.put("regDate", regDate)
     result.put("images", images)
 
     return result
