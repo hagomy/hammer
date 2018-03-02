@@ -19,11 +19,14 @@ package com.pickth.hammer.view.fragment
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.firebase.database.*
 import com.pickth.hammer.R
 import com.pickth.hammer.adapter.GoodsItemAdapter
+import com.pickth.hammer.extensions.getGoods
 import com.pickth.hammer.listener.GoodsItemTouchListener
 import com.pickth.hammer.view.activity.DetailActivity
 import com.pickth.imageslider.listener.OnImageTouchListener
@@ -37,6 +40,7 @@ import org.jetbrains.anko.startActivity
 
 class HomeFragment : Fragment(), GoodsItemTouchListener {
 
+  val TAG = javaClass.simpleName
   private lateinit var mAdapter: GoodsItemAdapter
 
   companion object {
@@ -46,7 +50,8 @@ class HomeFragment : Fragment(), GoodsItemTouchListener {
 
   override fun onClick(position: Int) {
 //        mAdapter.getItem(position)
-    activity?.startActivity<DetailActivity>()
+    val goods = mAdapter.getItem(position)
+    activity?.startActivity<DetailActivity>("id" to goods.id, "code" to goods.category)
   }
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -69,7 +74,7 @@ class HomeFragment : Fragment(), GoodsItemTouchListener {
     }
 
     rootView.imageslider_home_event.run {
-      setOnImageTouchListener(object: OnImageTouchListener {
+      setOnImageTouchListener(object : OnImageTouchListener {
         override fun onClickListener(position: Int) {
 
         }
@@ -82,13 +87,31 @@ class HomeFragment : Fragment(), GoodsItemTouchListener {
       imageslider_home_event.addItems(items)
     }
 
-    addItem()
+    getItems()
 
     mAdapter.notifyDataSetChanged()
     return rootView
   }
 
-  fun addItem() {
+  fun getItems() {
+    val goodsReference = FirebaseDatabase.getInstance().reference.child("goods").child("latest")
+        .orderByChild("regDate")
+        .addListenerForSingleValueEvent(object : ValueEventListener {
+          override fun onDataChange(p0: DataSnapshot?) {
+            if(p0 != null) {
+              for(itemSnapshot in p0.children) {
+                itemSnapshot.getGoods()?.let {
+                  mAdapter.addItemAtFirst(it)
+                  mAdapter.notifyItemInserted(0)
+                }
+              }
+            }
+          }
+
+          override fun onCancelled(p0: DatabaseError?) {
+            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+          }
+        })
 
   }
 }

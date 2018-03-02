@@ -21,7 +21,7 @@ import com.pickth.hammer.item.Goods
 import com.pickth.hammer.util.UserInfoManager
 import kotlinx.android.synthetic.main.activity_write_goods.*
 import org.jetbrains.anko.toast
-import java.util.UUID
+import java.util.*
 import kotlin.collections.HashMap
 
 /**
@@ -97,6 +97,7 @@ class WriteGoodsActivity : AppCompatActivity() {
 
     val childUpdates = HashMap<String, Any>()
     childUpdates.put("/goods/$categoryCode/${goods.id}", goods.toMap())
+    childUpdates.put("/goods/latest/${goods.id}", goods.toMap())
     mDatabase.updateChildren(childUpdates)
 
     toast("등록되었습니다.")
@@ -175,7 +176,8 @@ class WriteGoodsActivity : AppCompatActivity() {
 
         uploadImage(goodsId, imageUrl)
 
-        val goods = Goods(goodsId, name, explanation, price, false, user, mCategoryCode)
+        val date = System.currentTimeMillis().toString()
+        val goods = Goods(goodsId, name, explanation, price, false, user, mCategoryCode, date)
 
         postGoods(mCategoryCode, goods)
       }

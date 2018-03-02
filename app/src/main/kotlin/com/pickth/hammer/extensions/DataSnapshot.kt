@@ -43,12 +43,13 @@ fun DataSnapshot.getGoods(): Goods? {
     val userMap = child("user").value as HashMap<String, String>
     val images = child("images").value as java.util.ArrayList<String>?
     val category = child("category").value as String
+    val regDate = child("regDate").value as String
 
     val user = User(userMap["uid"]!!, userMap["email"]!!)
     if(images != null) {
-      goods = Goods(id, name, explanation, price.toInt(), isHot, user, category, images)
+      goods = Goods(id, name, explanation, price.toInt(), isHot, user, category, regDate, images)
     } else {
-      goods = Goods(id, name, explanation, price.toInt(), isHot, user, category)
+      goods = Goods(id, name, explanation, price.toInt(), isHot, user, category, regDate)
     }
   } catch (e: Exception) {
     e.printStackTrace()

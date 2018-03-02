@@ -46,7 +46,6 @@ class CategoryActivity: AppCompatActivity() {
   private lateinit var mGoodsItemAdapter: GoodsItemAdapter
 
   // database
-  private lateinit var mItemReference: DatabaseReference
   private lateinit var mCategoryReference: DatabaseReference
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,14 +61,14 @@ class CategoryActivity: AppCompatActivity() {
 
     mCategoryReference.addListenerForSingleValueEvent(object: ValueEventListener {
       override fun onDataChange(p0: DataSnapshot?) {
-        Log.e(TAG, p0?.value.toString())
+        Log.d(TAG, p0?.value.toString())
         if(p0 == null) {
           toast("잘못된 접근입니다.")
           finish()
           return
         }
         mCategoryName = p0.getCategoryName(mCategoryCode)
-        Log.e(TAG, "category code: ${mCategoryCode}, category name : ${mCategoryName}")
+        Log.d(TAG, "category code: ${mCategoryCode}, category name : ${mCategoryName}")
         if(mCategoryName == "") {
           toast("잘못된 접근입니다.")
           finish()
@@ -120,24 +119,26 @@ class CategoryActivity: AppCompatActivity() {
   }
 
   private fun getItemList(categoryCode: String) {
-    mItemReference = FirebaseDatabase.getInstance().reference
+    val mItemReference = FirebaseDatabase.getInstance().reference
         .child("goods")
         .child(categoryCode)
+        .orderByChild("regDate")
+        .addListenerForSingleValueEvent(object: ValueEventListener {
+          override fun onDataChange(p0: DataSnapshot?) {
+            if(p0 != null) {
+              for(itemSnapshot in p0.children) {
+                itemSnapshot.getGoods()?.let {
+                  mGoodsItemAdapter.addItemAtFirst(it)
+                  mGoodsItemAdapter.notifyItemInserted(0)
+                }
+              }
+            }
 
-    mItemReference.addListenerForSingleValueEvent(object: ValueEventListener {
-      override fun onDataChange(p0: DataSnapshot?) {
-//        val goods = p0?.getValue(ArrayList<Any>::javaClass)
-        if(p0 != null) {
-          for(itemSnapshot in p0.children) {
-            itemSnapshot.getGoods()?.let { mGoodsItemAdapter.addItem(it) }
           }
-          mGoodsItemAdapter.notifyDataSetChanged()
-        }
+          override fun onCancelled(p0: DatabaseError?) {
+          }
+        })
 
-      }
-      override fun onCancelled(p0: DatabaseError?) {
-      }
-    })
 
   }
 }
